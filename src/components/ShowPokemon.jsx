@@ -28,7 +28,7 @@ const ShowPokemon = ({ pokemons, sortType }) => {
 		});
 	}
 
-	if (pokemons.length < 3) {
+	if (pokemons.length < 3 && pokemons[0]) {
 		return <DetailsOfPokemon pokemon={pokemons[0]} />
 	}
 
