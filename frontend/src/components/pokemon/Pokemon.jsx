@@ -1,8 +1,7 @@
 const Pokemon = ({ pokemon }) => {
 	return (
-		<div>
-			<li>{pokemon.name}</li>
-		</div>
+		<li>{pokemon.name}
+		</li>
 	)
 }
 

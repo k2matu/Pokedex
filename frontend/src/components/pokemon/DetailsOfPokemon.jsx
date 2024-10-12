@@ -1,17 +1,17 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
+import pokemonService from '../../services/pokemons'
 
 const DetailsOfPokemon = ({ pokemon }) => {
 	const [info, setInfo] = useState([])
 
 	useEffect(() => {
-		axios
-			.get(pokemon.url)
+		pokemonService
+			.getOne(pokemon.name)
 			.then(res => {
 				setInfo(res.data)
 				console.log(res.data)
 			})
-	}, [])
+	}, [pokemon.name])
 
 	return (
 		<div>

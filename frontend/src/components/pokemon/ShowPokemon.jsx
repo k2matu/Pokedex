@@ -34,11 +34,9 @@ const ShowPokemon = ({ pokemons, sortType }) => {
 
 	return (
 		<div>
-			<ul>
-				{pokemons.map(pokemon =>
-					<Pokemon key={pokemon.name} pokemon={pokemon} />
-				)}
-			</ul>
+			{pokemons.map(pokemon =>
+				<Pokemon key={pokemon.name} pokemon={pokemon} />
+			)}
 		</div>
 	)
 

@@ -1,17 +1,15 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
-import ShowPokemon from './components/ShowPokemon'
-import Header from './components/Header'
-import Footer from './components/Footer'
+import pokemonService from '../../services/pokemons'
+import ShowPokemon from '../pokemon/ShowPokemon'
 
-const App = () => {
+const Body = () => {
 	const [pokemons, setPokemons] = useState([])
 	const [sortType, setSortType] = useState("A-Z")
 	const [searchPokemon, setSearchPokemon] = useState('')
 
 	useEffect(() => {
-		axios
-			.get('https://pokeapi.co/api/v2/pokemon?limit=151')
+		pokemonService
+			.getAll()
 			.then(res => {
 				setPokemons(res.data.results)
 			})
@@ -33,7 +31,6 @@ const App = () => {
 
 	return (
 		<div>
-			<Header />
 			<p>
 				Search Pokemon
 				<input onChange={handleSearchChange} />
@@ -48,9 +45,10 @@ const App = () => {
 				</select>
 			</form>
 			<ShowPokemon pokemons={pokemon} sortType={sortType} />
-			<Footer />
+
 		</div>
+
 	)
 }
 
-export default App
+export default Body
