@@ -6,6 +6,7 @@ import Body from './components/layout/Body'
 import Header from './components/layout/Header'
 import Footer from './components/layout/Footer'
 import Login from './components/login/Login'
+import Register from './components/login/Register'
 
 const App = () => {
 	return (
@@ -18,6 +19,7 @@ const App = () => {
 
 			<Routes>
 				<Route path='/login' element={<Login />} />
+				<Route path='/register' element={<Register />} />
 				<Route path='/' element={<Body />} />
 			</Routes>
 
