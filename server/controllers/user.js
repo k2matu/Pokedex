@@ -1,10 +1,10 @@
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 const userRouter = require('express').Router()
 const pool = require('../utils/db')
 
 userRouter.get('/', async (req, res) => {
 	try {
-		const result = await pool.query(`SELECT * from users`)
+		const result = await pool.query(`SELECT "username", "email" FROM users`)
 		res.json(result.rows)
 	} catch (err) {
 		console.error(err)

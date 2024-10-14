@@ -15,8 +15,6 @@ dist-ssr
 *.local
 
 *.env
-Dockerfile
-docker-compose.yml
 
 # Editor directories and files
 .vscode/*
