@@ -1,0 +1,17 @@
+node_modules
+client/node_modules
+server/node_modules
+
+dist
+public
+
+.DS_Store
+
+Dockerfile
+docker-compose.yml
+
+*.tmp
+*.temp
+
+*.log
+*.env

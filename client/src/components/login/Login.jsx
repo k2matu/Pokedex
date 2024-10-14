@@ -1,32 +1,32 @@
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 
-const Login = () => {
+const Login = ({ users }) => {
 	const { handleSubmit, register, formState: { errors } } = useForm();
 	const onSubmit = values => console.log(values);
 
 	return (
 		<div>
+			<h3>Login</h3>
 			< form onSubmit={handleSubmit(onSubmit)}>
-				<label>Username</label>
 				<input
-					{...register("username", {
-						validate: value => value !== "admin" || "Nice try!"
+					placeholder='Username'
+					{...register('username', {
+						required: true,
 					})}
 				/>
-				<br />
-				<label>Password</label>
+				<p>{errors.username && 'Username missing'}</p>
 				<input
-					{...register("password", {
-						validate: value => value !== "admin" || "Nice try!"
+					placeholder='Password'
+					{...register('password', {
+						required: true,
 					})}
 				/>
-				{errors.password && errors.password.message}
-				<button type='submit'>Log in</button>
+				<p>{errors.password && 'Password missing'}</p>	<button type='submit'>Sign up</button>
 			</form>
 			<div>
 				Don't have an account?
-				<Link to='/register' >Sign up</Link>
+				<Link to='/register'> Sign up</Link>
 			</div>
 		</div>
 	)
