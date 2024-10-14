@@ -1,7 +1,7 @@
 import Pokemon from './Pokemon'
 import DetailsOfPokemon from './DetailsOfPokemon'
 
-const ShowPokemon = ({ pokemons, sortType }) => {
+const ShowPokemon = ({ pokemons, sortType, user }) => {
 	const getLastNumberFromUrl = (url) => {
 		const matches = url.match(/(\d+)/g);
 		return matches ? Number(matches[matches.length - 1]) : null
@@ -35,7 +35,7 @@ const ShowPokemon = ({ pokemons, sortType }) => {
 	return (
 		<div>
 			{pokemons.map(pokemon =>
-				<Pokemon key={pokemon.name} pokemon={pokemon} />
+				<Pokemon key={pokemon.name} pokemon={pokemon} user={user} />
 			)}
 		</div>
 	)

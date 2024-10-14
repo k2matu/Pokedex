@@ -17,7 +17,7 @@ WORKDIR /usr/src/client
 COPY --from=build-client /usr/src/client/dist ./dist
 
 COPY client/package*.json ./
-RUN npm ci --only=prod
+RUN npm install
 
 EXPOSE 5173
 

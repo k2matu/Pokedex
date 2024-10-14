@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import pokemonService from '../../services/pokemons'
+import pokemonService from '../../services/pokemon'
 
 const DetailsOfPokemon = ({ pokemon }) => {
 	const [info, setInfo] = useState([])

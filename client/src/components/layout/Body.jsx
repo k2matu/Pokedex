@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
-import pokemonService from '../../services/pokemons'
+import pokemonService from '../../services/pokemon'
 import ShowPokemon from '../pokemon/ShowPokemon'
 
-const Body = () => {
+const Body = ({ user }) => {
 	const [pokemons, setPokemons] = useState([])
 	const [sortType, setSortType] = useState("A-Z")
 	const [searchPokemon, setSearchPokemon] = useState('')
@@ -44,7 +44,7 @@ const Body = () => {
 					<option value="Highest">Highest Number (First)</option>
 				</select>
 			</form>
-			<ShowPokemon pokemons={pokemon} sortType={sortType} />
+			<ShowPokemon pokemons={pokemon} sortType={sortType} user={user} />
 
 		</div>
 
