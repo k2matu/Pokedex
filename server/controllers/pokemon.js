@@ -17,7 +17,24 @@ pokemonRouter.get('/:name', async (req, res) => {
 		const name = req.params.name
 		const apiRes = await axios.get(`${baseUrl}/${name}`)
 		const data = apiRes.data
-		res.json(data)
+		
+		const abilities = data.abilities.map(({ ability}) => ({
+      name: ability.name,
+    }))
+		const weight = data.weight
+		const height = data.height
+		const types = data.types.map(({ type }) => ({
+			name : type.name,
+		}))
+
+		const response = {
+				abilities,
+				weight,
+				height,
+				types,
+		};
+		console.log(data);
+		res.json(response)
 	} catch (error) {
 		res.status(500).json({error: 'Failed to fetch data'})
 	}

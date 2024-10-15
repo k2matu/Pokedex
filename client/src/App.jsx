@@ -1,57 +1,29 @@
-import {
-	BrowserRouter as Router,
-	Routes, Route, Link
-} from 'react-router-dom'
-import Body from './components/layout/Body'
-import Header from './components/layout/Header'
-import Footer from './components/layout/Footer'
-import Login from './components/login/Login'
-import Register from './components/login/Register'
-import { useState, useEffect } from 'react'
-import userService from './services/user'
-import pokemonService from './services/pokemon'
+import Header from './components/Header'
+import Footer from './components/Footer'
+import Notif from './components/Notif'
+import Path from './pages/Path'
+import { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { setAuth } from './reducers/authReducer'
 
 const App = () => {
-	const [users, setUsers] = useState([])
-	const [user, setUser] = useState(null)
+	const dispatch = useDispatch()
 
 	useEffect(() => {
-		userService
-			.getAll()
-			.then(res => {
-				setUsers(res.data)
-				console.log(res.data)
-			})
-	}, [])
-
-	useEffect(() => {
-		const loggedUserJSON = window.localStorage.getItem('username')
-		if (loggedUserJSON) {
-			const user = JSON.parse(loggedUserJSON)
-			setUser(user)
-			// pokemonService.setToken(user.token)
+		const loginUser = window.localStorage.getItem('username')
+		if (loginUser) {
+			const user = JSON.parse(loginUser)
+			dispatch(setAuth(user))
 		}
-	}, [])
+	}, [dispatch])
 
 	return (
-		<Router>
-			<div>
-				<Header />
-				<Link to='/'>Home</Link>
-				{!user && <Link to='/login'>Login</Link>}
-				{user && <Link to='/login'>Userpage</Link>}
-			</div>
-
-			<Routes>
-				<Route path='/login' element={<Login users={users} user={user} setUser={setUser} />} />
-				<Route path='/register' element={<Register users={users} setUsers={setUsers} />} />
-				<Route path='/' element={<Body user={user} />} />
-			</Routes>
-
-			<div>
-				<Footer />
-			</div>
-		</Router >
+		<div>
+			<Header text='Pokedex App' />
+			<Notif />
+			<Path />
+			<Footer />
+		</div>
 	)
 }
 

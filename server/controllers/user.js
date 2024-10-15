@@ -50,7 +50,10 @@ userRouter.post('/', async (req, res) => {
 	try {
 		const passwordHash = await bcrypt.hash(password, saltRounds)
 		const result = await pool.query('INSERT INTO users (username, email, password_hash) VALUES ($1, $2, $3) RETURNING *', [username, email, passwordHash])
-		res.status(201).json(result.rows[0])
+		res.status(201).json({
+			username: result.rows[0].username, 
+			email: result.rows[0].email	
+		})
 	} catch (err) {
 		console.error(err)
 		res.status(500).json({error: 'Internal server error'})
@@ -68,7 +71,10 @@ userRouter.patch('/:username/password', async (req, res) => {
 		if (result.rows.length === 0) {
 			return res.status(404).json({error: 'User not found'})
 	}
-	res.json(result.rows[0])
+	res.json({
+		username: result.rows[0].username, 
+		email: result.rows[0].email	
+	})
 }catch (err) {
 		console.error(err)
 		res.status(500).json({error: 'Internal'})
@@ -84,7 +90,10 @@ userRouter.patch('/:username', async (req, res) => {
 		if (result.rows.length === 0) {
 			return res.status(404).json({error: 'User not found'})
 	}
-	res.json(result.rows[0])
+	res.json({
+		username: result.rows[0].username, 
+		email: result.rows[0].email	
+	})
 }catch (err) {
 		console.error(err)
 		res.status(500).json({error: 'Internal'})

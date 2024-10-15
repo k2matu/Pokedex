@@ -3,7 +3,7 @@ The goal of this coding challenge is to put to work all the things students have
 
 ## The coding challenge needs to include:
 1. A front end with at least 3 pages +
-2. User authentication (username and password)
+2. User authentication (username and password) +
 3. An API +
 4. The use of and external API +
 5. A database +
