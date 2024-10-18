@@ -13,9 +13,9 @@ const SearchInput = () => {
 			value={searchPokemon}
 			placeholder="Search"
 			onChange={(e) => dispatch(setSearchPokemon(e.target.value))}
-			className=" mr-sm-2"
+			className="mr-sm-2"
 		/>
 	);
-}
+};
 
 export default SearchInput;

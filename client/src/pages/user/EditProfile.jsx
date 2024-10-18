@@ -1,16 +1,30 @@
-import React from 'react';
+import { useDispatch } from 'react-redux';
 import { Form, Button, Container } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
+import { useLogout } from '../../utils/authUtils';
+import { updateUserName } from '../../reducers/authReducer';
+import { useNavigate } from 'react-router-dom';
 
 const EditProfile = () => {
+	const dispatch = useDispatch();
+	const handleLogout = useLogout();
+	const navigate = useNavigate();
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
 	} = useForm();
 
-	const onSubmit = () => {
-		console.log("Submitted password");
+	const onSubmit = async (data) => {
+		try {
+			const success = await dispatch(updateUserName(data));
+			if (success) {
+				handleLogout();
+				navigate('/login');
+			}
+		} catch (err) {
+			console.error("Could not change username", err);
+		}
 	};
 
 	return (
@@ -24,15 +38,6 @@ const EditProfile = () => {
 						placeholder="Enter your username"
 						{...register('username')}
 					/>
-				</Form.Group>
-				<Form.Group controlId="formEmail">
-					<Form.Label>Email</Form.Label>
-					<Form.Control
-						type="email"
-						placeholder="Enter your email"
-						{...register('email')}
-					/>
-					{errors.email && <p className="text-danger">Email is required</p>}
 				</Form.Group>
 				<Button variant="primary" type="submit" className="mt-3">
 					Save

@@ -1,8 +1,15 @@
 import React from 'react';
 import { Form, Button, Container } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+import { handlePasswordChange } from '../../reducers/authReducer';
+import { useNavigate } from 'react-router-dom';
+import { useLogout } from '../../utils/authUtils';
 
 const ChangePassword = () => {
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
+	const handleLogout = useLogout();
 	const {
 		register,
 		handleSubmit,
@@ -13,10 +20,11 @@ const ChangePassword = () => {
 		try {
 			const success = await dispatch(handlePasswordChange(data));
 			if (success) {
+				handleLogout();
 				navigate('/login');
 			}
 		} catch (err) {
-			console.error("Could not change password");
+			console.error("Could not change password", err);
 		}
 	};
 
@@ -34,7 +42,7 @@ const ChangePassword = () => {
 					{errors.oldPassword && <p className="text-danger">Old password is required</p>}
 				</Form.Group>
 				<Form.Group controlId="formNewPassword">
-					<Form.Label>New Password</Form.Label>
+					<Form.Label className='my-2'>New Password</Form.Label>
 					<Form.Control
 						type="password"
 						placeholder="Enter your new password"

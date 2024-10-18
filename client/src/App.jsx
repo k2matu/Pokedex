@@ -11,10 +11,9 @@ const App = () => {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		const loginUser = window.localStorage.getItem('user');
+		const loginUser = JSON.parse(window.localStorage.getItem('user'));
 		if (loginUser) {
-			const user = JSON.parse(loginUser);
-			dispatch(setAuth(user));
+			dispatch(setAuth(loginUser));
 		}
 	}, [dispatch]);
 

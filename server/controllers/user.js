@@ -1,12 +1,13 @@
 const bcrypt = require('bcryptjs');
 const userRouter = require('express').Router();
 const pool = require('../utils/db');
-const {checkIfExist} = require('../utils/dbHelpers');
+const { checkIfExist } = require('../utils/dbHelpers');
+const { checkIfPasswordCorrect } = require('../utils/auth');
 
 // Get all users
 userRouter.get('/', async (req, res, next) => {
 	try {
-		const result = await pool.query(`SELECT "username", "email" FROM users`);
+		const result = await pool.query(`SELECT "username", "email" FROM users;`);
 
 		res.json(result.rows);
 	} catch (err) {
@@ -18,9 +19,10 @@ userRouter.get('/', async (req, res, next) => {
 userRouter.get('/:username', async (req, res, next) => {
 	const { username } = req.params;
 	try {
-		const result = await pool.query('SELECT * FROM users WHERE username = $1', [
-			username,
-		]);
+		const result = await pool.query(
+			'SELECT * FROM users WHERE username = $1;',
+			[username],
+		);
 
 		const user = checkIfExist(result, 'User');
 
@@ -39,7 +41,7 @@ userRouter.delete('/:username', async (req, res, next) => {
 
 	try {
 		const result = await pool.query(
-			'DELETE FROM users WHERE username = $1 RETURNING *',
+			'DELETE FROM users WHERE username = $1 RETURNING *;',
 			[username],
 		);
 
@@ -65,7 +67,7 @@ userRouter.post('/', async (req, res, next) => {
 		const passwordHash = await bcrypt.hash(password, saltRounds);
 
 		const result = await pool.query(
-			'INSERT INTO users (username, email, password_hash) VALUES ($1, $2, $3) RETURNING *',
+			'INSERT INTO users (username, email, password_hash) VALUES ($1, $2, $3) RETURNING *;',
 			[username, email, passwordHash],
 		);
 
@@ -83,26 +85,34 @@ userRouter.post('/', async (req, res, next) => {
 // Update user password
 userRouter.patch('/:username/password', async (req, res, next) => {
 	const { username } = req.params;
-	const { newPassword } = req.body;
+	const { oldPassword, newPassword } = req.body;
 	const saltRounds = 10;
 
-	if (!newPassword) {
-		return res.status(400).json({ error: 'New password is required' });
+	if (!newPassword || !oldPassword) {
+		return res.status(400).json({ error: 'Both old and new password is required' });
 	}
 
 	try {
+		const userResult = await pool.query(
+			'SELECT * FROM users WHERE username = $1;',
+			[username],
+		);
+		const user = checkIfExist(userResult, 'User');
+		
+		await checkIfPasswordCorrect(oldPassword, user);
+
 		const passwordHash = await bcrypt.hash(newPassword, saltRounds);
 
 		const result = await pool.query(
-			'UPDATE users SET password_hash = $1 WHERE username = $2 RETURNING *',
+			'UPDATE users SET password_hash = $1 WHERE username = $2 RETURNING *;',
 			[passwordHash, username],
 		);
 
-		const user = checkIfExist(result, 'User');
+		const updatedUser = checkIfExist(result, 'User');
 
 		res.status(200).json({
-			username: user.username,
-			email: user.email,
+			username: updatedUser.username,
+			email: updatedUser.email,
 		});
 	} catch (err) {
 		next(err);
@@ -110,18 +120,18 @@ userRouter.patch('/:username/password', async (req, res, next) => {
 });
 
 // Update user username
-userRouter.patch('/:username', async (req, res, next) => {
-	const { username } = req.params;
-	const { newUsername } = req.body;
+userRouter.patch('/:oldUser/username', async (req, res, next) => {
+	const { oldUser } = req.params;
+	const { username } = req.body;
 
-	if (!newUsername) {
+	if (!username) {
 		return res.status(400).json({ error: 'New username is required' });
 	}
 
 	try {
 		const result = await pool.query(
-			'UPDATE users SET username = $1 WHERE username = $2 RETURNING *',
-			[newUsername, username],
+			'UPDATE users SET username = $1 WHERE username = $2 RETURNING *;',
+			[username, oldUser],
 		);
 
 		const user = checkIfExist(result, 'User');
@@ -135,4 +145,4 @@ userRouter.patch('/:username', async (req, res, next) => {
 	}
 });
 
-module.exports = userRouter
+module.exports = userRouter;

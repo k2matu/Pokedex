@@ -1,20 +1,15 @@
-import { clear } from '../../reducers/authReducer';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import Nav from 'react-bootstrap/Nav';
+import { useLogout } from '../../utils/authUtils';
 
 const Logout = () => {
-	const navigate = useNavigate();
-	const dispatch = useDispatch();
+	const handleLogout = useLogout();
 
-	const handleLogout = () => {
-		window.localStorage.removeItem('user');
-		dispatch(clear());
-		navigate('/');
+	const onLogoutClick = () => {
+		handleLogout();
 	};
 
 	return (
-		<Nav.Link as="span" onClick={handleLogout} style={{ cursor: 'pointer' }}>
+		<Nav.Link as="span" onClick={onLogoutClick} style={{ cursor: 'pointer' }}>
 			Logout
 		</Nav.Link>
 	);

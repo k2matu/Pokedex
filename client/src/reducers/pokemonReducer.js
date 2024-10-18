@@ -39,8 +39,7 @@ export const {setPokemons, setSortType, setSearchPokemon, appendPokemonInfo, set
 export const initializePokemons = () => {
 	return async (dispatch) => {
 		try {
-			const res = await pokemonService.getAll();
-			const pokemons = res.data.results;
+			const pokemons = await pokemonService.getAll();
 
 			const pokemonsWithIndex = await Promise.all(
 				pokemons.map((pokemon, index) => {
@@ -67,7 +66,8 @@ export const getPokemonInfo = (name) => {
 				return;
 			}
 			const info = await pokemonService.getOne(name);
-			dispatch(appendPokemonInfo({ name, info: info.data }));
+			console.log(info);
+			dispatch(appendPokemonInfo({ name, info }));
 		} catch (err) {
 			dispatch(notif('Failed to load pokemon info.', 60, 'dark'));
 			console.error('Error fetching pokemon info:', err);

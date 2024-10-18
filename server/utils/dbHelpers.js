@@ -8,5 +8,5 @@ const checkIfExist = (result, type) => {
 };
 
 module.exports = {
-	checkIfExist
+	checkIfExist,
 };

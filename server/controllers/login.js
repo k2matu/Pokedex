@@ -1,34 +1,27 @@
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs');
 const loginRouter = require('express').Router();
 const pool = require('../utils/db');
 const { checkIfExist } = require('../utils/dbHelpers');
-
-const checkifPasswordCorrect = async (password, user) => {
-	const passwordCorrect = await bcrypt.compare(password, user.password_hash);
-
-	if (!passwordCorrect) {
-		const err = new Error('Invalid username/password');
-		err.status = 401;
-		throw err;
-	}
-};
+const { checkIfPasswordCorrect } = require('../utils/auth');
 
 // Login authenication
 loginRouter.post('/', async (req, res, next) => {
 	const { username, password } = req.body;
-	
+
 	if (!username || !password) {
-		return res.status(400).json({ error: 'Username and password are required' });
+		return res
+			.status(400)
+			.json({ error: 'Username and password are required' });
 	}
 
 	try {
-		const result = await pool.query('SELECT * FROM users WHERE username = $1', [
-			username,
-		]);
+		const result = await pool.query(
+			'SELECT * FROM users WHERE username = $1;',
+			[username],
+		);
 
 		const user = checkIfExist(result, 'User');
-		await checkifPasswordCorrect(password, user);
+		await checkIfPasswordCorrect(password, user);
 
 		const userForToken = {
 			username: user.username,

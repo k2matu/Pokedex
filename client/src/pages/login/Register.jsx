@@ -42,7 +42,7 @@ const Register = () => {
 							</Form.Control.Feedback>
 						</Form.Group>
 						<Form.Group controlId="formUsername">
-							<Form.Label>Username</Form.Label>
+							<Form.Label className="my-2">Username</Form.Label>
 							<Form.Control
 								type="text"
 								placeholder="Choose a username"
@@ -58,7 +58,7 @@ const Register = () => {
 						</Form.Group>
 
 						<Form.Group controlId="formPassword">
-							<Form.Label>Password</Form.Label>
+							<Form.Label className="my-2">Password</Form.Label>
 							<Form.Control
 								type="password"
 								placeholder="Create a password"

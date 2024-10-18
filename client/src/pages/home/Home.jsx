@@ -16,7 +16,7 @@ const Home = () => {
 	}, [dispatch]);
 
 	return (
-		<Container>
+		<Container className="my-2">
 			<SortDropDown />
 			<ShowPokemon />
 		</Container>

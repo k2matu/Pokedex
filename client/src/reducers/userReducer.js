@@ -22,8 +22,8 @@ export const {setUsers, appendUser} = userSlice.actions;
 export const initializeUsers = () => {
 	return async (dispatch) => {
 		try {
-			const res = await userService.getAll();
-			const users = res.data;
+			const users = await userService.getAll();
+			console.log(users);
 			dispatch(setUsers(users));
 		} catch (err) {
 			dispatch(notif('Failed to load users.', 60, 'danger'));
@@ -40,8 +40,7 @@ export const createUser = (user) => {
 			if (userExist) {
 				dispatch(notif('This username is already taken. Please choose a different one.', 60, 'light'));
 			} else {
-				const res = await userService.create(user);
-				const { data } = res;
+				const data = await userService.create(user);
 				dispatch(appendUser(data));
 				dispatch(notif('Successfully created user', 5, 'success'));
 				return true;

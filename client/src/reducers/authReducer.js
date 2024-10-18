@@ -1,6 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit';
 import { notif, removing } from './notifReducer';
 import loginService from '../services/login';
+import userService from '../services/user';
 
 const initialState = {
 	user: null,
@@ -12,7 +13,7 @@ export const authSlice = createSlice({
 	initialState,
 	reducers: {
 		setAuth: (state, action) => {
-			const {username, token} = action.payload;
+			const {token, username} = action.payload;
 			state.user = username;
 			state.token = token;
 		},
@@ -44,19 +45,35 @@ export const handleLogin = (data) => {
 
 export const handlePasswordChange = (data) => {
 	return async (dispatch, getState) => {
-		const { oldPassword, newPassword } = data;
-		const username = getState().authorization.user; 
-		console.error(username);
-		console.error(oldPassword);
 		try {
-			const user = await loginService.login({ username, oldPassword});
-			if (user) {
-				console.log("yes there was a user");
+			const username = getState().auth.user; 
+			if (username) {
+				await userService.updatePassword(username, data);
+				dispatch(notif('Successfully changed password. Please log in again', 5, 'success'));
+				return true;
 			}
 		} catch (exception) {
-			dispatch(notif('Invalid password', 60, 'danger'));
+			dispatch(notif('Could not change password', 60, 'danger'));
+			console.error('Error during password change:', exception);
 			return false;
 		}
 	}
 }
+
+export const updateUserName = (data) => {
+	return async (dispatch, getState) => {
+	try {
+		const username = getState().auth.user;
+		if (username) {
+			await userService.updateUsername(username, data);
+			dispatch(notif('Successfully changed username. Please log in again', 5, 'success'));
+			return true;
+		}
+	} catch (exception) {
+		dispatch(notif('Could not change username', 60, 'danger'));
+		console.error('Error during username change:', exception);
+		return false;
+	}
+}};
+
 export default authSlice.reducer;
