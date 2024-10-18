@@ -2,6 +2,7 @@ import {createSlice} from '@reduxjs/toolkit';
 import { notif, removing } from './notifReducer';
 import loginService from '../services/login';
 import userService from '../services/user';
+import likesService from '../services/likes';
 
 const initialState = {
 	user: null,
@@ -33,6 +34,7 @@ export const handleLogin = (data) => {
 			const user = await loginService.login({ username, password });
 				dispatch(setAuth(user));
 				dispatch(removing());
+				likesService.setToken(loginUser.token);
 				window.localStorage.setItem('user', JSON.stringify(user));
 				return true;
 		} catch (exception) {
@@ -57,8 +59,8 @@ export const handlePasswordChange = (data) => {
 			console.error('Error during password change:', exception);
 			return false;
 		}
-	}
-}
+	};
+};
 
 export const updateUserName = (data) => {
 	return async (dispatch, getState) => {
@@ -74,6 +76,7 @@ export const updateUserName = (data) => {
 		console.error('Error during username change:', exception);
 		return false;
 	}
-}};
+};
+};
 
 export default authSlice.reducer;

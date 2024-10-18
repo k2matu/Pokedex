@@ -1,7 +1,7 @@
 const likesRouter = require('express').Router();
 const pool = require('../utils/db');
-const { checkIfExist } = require('./user');
 const { getTokenFrom, validateToken } = require('../utils/auth');
+const { checkIfExist } = require('../utils/dbHelpers');
 
 const handleLike = async (pokemonName, decodedToken) => {
 	await pool.query(
@@ -59,6 +59,28 @@ likesRouter.get('/', async (req, res, next) => {
 			WHERE user_pokemon.liked = TRUE;`);
 
 		res.json(result.rows);
+	} catch (err) {
+		next(err);
+	}
+});
+
+// Get user like
+likesRouter.get('/:userName', async (req, res, next) => {
+	const { userName } = req.params;
+	try {
+		const result = await pool.query(
+			`
+			SELECT users.username, pokemons.name
+			FROM users
+			JOIN user_pokemon ON users.id = user_pokemon.user_id
+			JOIN pokemons ON pokemons.id = user_pokemon.pokemon_id
+			WHERE users.username = $1 AND user_pokemon.liked = TRUE;`,
+			[userName],
+		);
+
+		const likes = checkIfExist(result, 'Likes');
+
+		res.json(likes.rows);
 	} catch (err) {
 		next(err);
 	}

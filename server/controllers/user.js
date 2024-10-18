@@ -7,7 +7,9 @@ const { checkIfPasswordCorrect } = require('../utils/auth');
 // Get all users
 userRouter.get('/', async (req, res, next) => {
 	try {
-		const result = await pool.query(`SELECT "username", "email" FROM users;`);
+		const result = await pool.query(
+			`SELECT "username", "email", "id" FROM users;`,
+		);
 
 		res.json(result.rows);
 	} catch (err) {
@@ -29,6 +31,7 @@ userRouter.get('/:username', async (req, res, next) => {
 		res.json({
 			username: user.username,
 			email: user.email,
+			id: user.id,
 		});
 	} catch (err) {
 		next(err);
@@ -89,7 +92,9 @@ userRouter.patch('/:username/password', async (req, res, next) => {
 	const saltRounds = 10;
 
 	if (!newPassword || !oldPassword) {
-		return res.status(400).json({ error: 'Both old and new password is required' });
+		return res
+			.status(400)
+			.json({ error: 'Both old and new password is required' });
 	}
 
 	try {
@@ -98,7 +103,7 @@ userRouter.patch('/:username/password', async (req, res, next) => {
 			[username],
 		);
 		const user = checkIfExist(userResult, 'User');
-		
+
 		await checkIfPasswordCorrect(oldPassword, user);
 
 		const passwordHash = await bcrypt.hash(newPassword, saltRounds);
@@ -130,7 +135,7 @@ userRouter.patch('/:oldUser/username', async (req, res, next) => {
 
 	try {
 		const result = await pool.query(
-			'UPDATE users SET username = $1 WHERE username = $2 RETURNING *;',
+			'UPDATE users SET username = $1 WHERE id = $2 RETURNING *;',
 			[username, oldUser],
 		);
 

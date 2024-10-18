@@ -18,6 +18,7 @@ const pokemonSlice = createSlice({
 			state.pokemons = action.payload;
 		},
 		setSortType: (state, action) => {
+			state.sortType = action.payload;
 		},
 		setSearchPokemon: (state, action) => {
 			state.searchPokemon = action.payload;
@@ -66,7 +67,6 @@ export const getPokemonInfo = (name) => {
 				return;
 			}
 			const info = await pokemonService.getOne(name);
-			console.log(info);
 			dispatch(appendPokemonInfo({ name, info }));
 		} catch (err) {
 			dispatch(notif('Failed to load pokemon info.', 60, 'dark'));
