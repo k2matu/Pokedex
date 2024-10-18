@@ -4,7 +4,6 @@ const loginRouter = require('express').Router();
 const pool = require('../utils/db');
 const { checkIfExist } = require('../utils/dbHelpers');
 
-// Helper function to check password
 const checkifPasswordCorrect = async (password, user) => {
 	const passwordCorrect = await bcrypt.compare(password, user.password_hash);
 

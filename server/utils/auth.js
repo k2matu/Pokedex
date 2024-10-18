@@ -18,7 +18,7 @@ const validateToken = async (token) => {
 	return decodedToken;
 }
 
-module.export = {
+module.exports = {
 	getTokenFrom,
 	validateToken,
 }
