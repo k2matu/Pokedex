@@ -1,24 +1,42 @@
-import { setSortType } from '../../reducers/pokemonReducer'
-import { useSelector, useDispatch } from 'react-redux'
+import { setSortType } from '../../reducers/pokemonReducer';
+import { useSelector, useDispatch } from 'react-redux';
+import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
 
 const SortDropDown = () => {
-	const dispatch = useDispatch()
+	const dispatch = useDispatch();
 
-	const sortType = useSelector((state) => state.pokemon.sortType)
+	const visible = useSelector((state) => state.pokemon.visible);
 
+	const handleSortChange = (sortValue) => {
+		dispatch(setSortType(sortValue));
+	};
+
+	if (!visible) {
+		return null;
+	}
 	return (
-		<div>
-			<p>Sort By</p>
-			<select
-				value={sortType}
-				onChange={(e) => dispatch(setSortType(e.target.value))}>
-				<option value="A-Z">A-Z</option>
-				<option value="Z-A">Z-A</option>
-				<option value="Lowest">Lowest Number (First)</option>
-				<option value="Highest">Highest Number (First)</option>
-			</select>
-		</div>
-	)
-}
+		<>
+			<Dropdown className="d-inline mx-2">
+				<Dropdown.Toggle
+					id="dropdown-autoclose-true"
+					style={{
+						backgroundColor: 'white',
+						color: '#000',
+						borderColor: 'grey'
+					}}>
+					Sort By
+				</Dropdown.Toggle>
+				<Dropdown.Menu>
+					<Dropdown.Item onClick={() => handleSortChange('A-Z')}>A-Z</Dropdown.Item>
+					<Dropdown.Item onClick={() => handleSortChange('Z-A')}>Z-A</Dropdown.Item>
+					<Dropdown.Item onClick={() => handleSortChange('Lowest')}>Lowest Number (First)</Dropdown.Item>
+					<Dropdown.Item onClick={() => handleSortChange('Highest')}>Highest Number (First)</Dropdown.Item>
+				</Dropdown.Menu>
+			</Dropdown>
+		</>
+	);
+};
 
-export default SortDropDown
+
+export default SortDropDown;

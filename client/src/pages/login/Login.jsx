@@ -1,50 +1,66 @@
-import { useForm } from 'react-hook-form'
-import { Link, useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useForm } from 'react-hook-form';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { handleLogin } from
-	'../../reducers/authReducer'
+	'../../reducers/authReducer';
+import { Container, Row, Col, Form, Button, Alert } from 'react-bootstrap';
 
 const Login = () => {
-	const dispatch = useDispatch()
-	const navigate = useNavigate()
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
 	const {
 		handleSubmit,
 		register,
 		formState: { errors }
-	} = useForm()
+	} = useForm();
 
 	const onLoginSubmit = async (data) => {
-		const success = dispatch(handleLogin(data))
-		if (success) {
-			navigate('/profile')
+		try {
+			const success = await dispatch(handleLogin(data));
+			if (success) {
+				navigate('/');
+			}
+		} catch (err) {
+			console.error('Error during login', err);
 		}
-	}
+	};
 
 	return (
-		<div>
-			<h3>Login</h3>
-			< form onSubmit={handleSubmit(onLoginSubmit)}>
-				<input
-					placeholder='Username'
-					{...register('username', {
-						required: true,
-					})}
-				/>
-				<p>{errors.username && 'Username missing'}</p>
-				<input
-					placeholder='Password'
-					{...register('password', {
-						required: true,
-					})}
-				/>
-				<p>{errors.password && 'Password missing'}</p>	<button type='submit'>Login</button>
-			</form>
-			<div>
-				Don't have an account?
-				<Link to='/register'> Sign up</Link>
-			</div>
-		</div>
-	)
-}
+		<Container className="mt-5">
+			<Row className="justify-content-center">
+				<Col md={6}>
+					<h3 className="text-center">Login</h3>
+					<Form onSubmit={handleSubmit(onLoginSubmit)}>
+						<Form.Group controlId="formUsername">
+							<Form.Label>Username</Form.Label>
+							<Form.Control
+								type="text"
+								placeholder="Enter username"
+								{...register('username', { required: true })}
+							/>
+							{errors.username && <p className="text-danger">Username is required</p>}
+						</Form.Group>
+						<Form.Group controlId="formPassword">
+							<Form.Label>Password</Form.Label>
+							<Form.Control
+								type="password"
+								placeholder="Password"
+								{...register('password', { required: true })}
+							/>
+							{errors.password && <p className="text-danger">Password is required</p>}
+						</Form.Group>
+						<Button variant="primary" type="submit" className="mt-3">
+							Login
+						</Button>
+					</Form>
+					<div className="mt-3 text-center">
+						Don't have an account? <Link to="/register">Sign up</Link>
+					</div>
+				</Col>
+			</Row>
+		</Container>
+	);
+};
 
-export default Login
+
+export default Login;

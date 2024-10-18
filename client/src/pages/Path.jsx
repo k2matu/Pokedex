@@ -1,18 +1,19 @@
-import { Routes, Route } from 'react-router-dom'
-import { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
-import { initializeUsers } from '../reducers/userReducer'
-import Home from './home/Home'
-import Login from './login/Login'
-import Register from './login/Register'
-import Profile from './user/Profile'
+import { Routes, Route } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { initializeUsers } from '../reducers/userReducer';
+import Home from './home/Home';
+import Login from './login/Login';
+import Register from './login/Register';
+import Profile from './user/Profile';
+import Settings from './user/Settings';
 
 const Path = () => {
-	const dispatch = useDispatch()
+	const dispatch = useDispatch();
 
 	useEffect(() => {
-		dispatch(initializeUsers())
-	}, [dispatch])
+		dispatch(initializeUsers());
+	}, [dispatch]);
 
 	return (
 		<Routes>
@@ -20,7 +21,8 @@ const Path = () => {
 			<Route path='/login' element={<Login />} />
 			<Route path='/profile' element={<Profile />} />
 			<Route path='/register' element={<Register />} />
+			<Route path='/settings' element={<Settings />} />
 		</Routes>
-	)
-}
-export default Path
+	);
+};
+export default Path;

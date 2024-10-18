@@ -1,54 +1,78 @@
-import { createSlice } from '@reduxjs/toolkit'
-import pokemonService from '../services/pokemon'
-import { setNotif } from './notifReducer'
+import { createSlice } from '@reduxjs/toolkit';
+import pokemonService from '../services/pokemon';
+import { notif } from './notifReducer';
 
 const initialState = {
 	pokemons: [],
 	sortType: 'A-Z',
 	searchPokemon: '',
-}
+	info: [],
+	visible: true,
+};
 
 const pokemonSlice = createSlice({
 	name: 'pokemon',
 	initialState,
 	reducers: {
 		setPokemons: (state, action) => {
-			state.pokemons = action.payload
+			state.pokemons = action.payload;
 		},
 		setSortType: (state, action) => {
-			state.sortType = action.payload
 		},
 		setSearchPokemon: (state, action) => {
-			state.searchPokemon = action.payload
+			state.searchPokemon = action.payload;
+		},
+		appendPokemonInfo: (state, action) => {
+			state.info.push(action.payload);
+		},
+		setVisible: (state, action) => {
+			state.visible = true;
+		},
+		clearVisible: (state, action) => {
+			state.visible = false;
 		}
 	}
-})
+});
 
-export const {setPokemons, setSortType, setSearchPokemon} = pokemonSlice.actions
+export const {setPokemons, setSortType, setSearchPokemon, appendPokemonInfo, setVisible, clearVisible} = pokemonSlice.actions;
 
 export const initializePokemons = () => {
 	return async (dispatch) => {
 		try {
-			const res = await pokemonService.getAll()
-			const pokemons = res.data.results
-			
+			const res = await pokemonService.getAll();
+			const pokemons = res.data.results;
+
 			const pokemonsWithIndex = await Promise.all(
-				pokemons.map(async (pokemon, index) => {
-					const info = await pokemonService.getOne(pokemon.name);
+				pokemons.map((pokemon, index) => {
 					return {
 						name: pokemon.name,
 						index: index + 1,
-						info: info.data,
-					}
+					};
 				})
-			)
-console.log(pokemonsWithIndex)
-dispatch(setPokemons(pokemonsWithIndex))
+			);
+			console.log(pokemonsWithIndex);
+			dispatch(setPokemons(pokemonsWithIndex));
 		} catch (err) {
-			dispatch(setNotif({ message: 'Failed to load pokemons.', type: 'error' }))
+			dispatch(notif('Failed to load pokemons.', 60, 'dark'));
 			console.error('Error fetching pokemons:', err);
-	}
-	}
-}
+		}
+	};
+};
 
-export default pokemonSlice.reducer
+export const getPokemonInfo = (name) => {
+	return async (dispatch, getState) => {
+			try {
+				const pokemonInfoExist = getState().pokemon.info.find((p) => p?.name === name);
+			if (pokemonInfoExist) {
+				return;
+			}
+			const info = await pokemonService.getOne(name);
+			dispatch(appendPokemonInfo({ name, info: info.data }));
+		} catch (err) {
+			dispatch(notif('Failed to load pokemon info.', 60, 'dark'));
+			console.error('Error fetching pokemon info:', err);
+		}
+	};
+};
+
+export default pokemonSlice.reducer;

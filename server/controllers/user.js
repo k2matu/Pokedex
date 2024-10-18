@@ -14,6 +14,7 @@ userRouter.get('/', async (req, res) => {
 
 userRouter.get('/:username', async (req, res) => {
 	const {username} = req.params
+	
 	try {
 		const result = await pool.query('SELECT * FROM users WHERE username = $1', [username])
 		if (result.rows.length === 0) {
@@ -27,6 +28,7 @@ userRouter.get('/:username', async (req, res) => {
 
 userRouter.delete('/:username', async (req, res) => {
 	const {username} = req.params
+	
 	try {
 		const result = await pool.query('DELETE FROM users WHERE username = $1 RETURNING *', [username])
 		if (result.rows.length === 0) {
@@ -43,10 +45,11 @@ userRouter.delete('/:username', async (req, res) => {
 userRouter.post('/', async (req, res) => {
 	const { email, username, password } = req.body
 	const saltRounds = 10
+	
 	if (!username || !email || !password) {
 		return res.status(400).json({error: 'All fields are required'})
 	}
-	
+
 	try {
 		const passwordHash = await bcrypt.hash(password, saltRounds)
 		const result = await pool.query('INSERT INTO users (username, email, password_hash) VALUES ($1, $2, $3) RETURNING *', [username, email, passwordHash])
@@ -64,6 +67,8 @@ userRouter.patch('/:username/password', async (req, res) => {
 	const { username } = req.params
 	const { newPassword } = req.body
 	const saltRounds = 10
+	
+
 	
 	try {
 		const passwordHash = await bcrypt.hash(newPassword, saltRounds)
@@ -84,7 +89,7 @@ userRouter.patch('/:username/password', async (req, res) => {
 userRouter.patch('/:username', async (req, res) => {
 	const { username } = req.params
 	const { newUsername } = req.body
-	
+
 	try {
 		const result = await pool.query('UPDATE users SET username = $1 WHERE username = $2 RETURNING *', [newUsername, username])
 		if (result.rows.length === 0) {
@@ -94,7 +99,7 @@ userRouter.patch('/:username', async (req, res) => {
 		username: result.rows[0].username, 
 		email: result.rows[0].email	
 	})
-}catch (err) {
+} catch (err) {
 		console.error(err)
 		res.status(500).json({error: 'Internal'})
 	}

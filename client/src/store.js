@@ -1,9 +1,9 @@
-import { configureStore } from "@reduxjs/toolkit"
+import { configureStore } from "@reduxjs/toolkit";
 
-import userReducer from './reducers/userReducer'
-import authReducer from './reducers/authReducer'
-import notifReducer from './reducers/notifReducer'
-import pokemonReducer from './reducers/pokemonReducer'
+import userReducer from './reducers/userReducer';
+import authReducer from './reducers/authReducer';
+import notifReducer from './reducers/notifReducer';
+import pokemonReducer from './reducers/pokemonReducer';
 
 const store = configureStore({
 	reducer: {
@@ -12,6 +12,6 @@ const store = configureStore({
 		notif: notifReducer,
 		pokemon: pokemonReducer,
 	},
-})
+});
 
-export default store
+export default store;

@@ -1,9 +1,10 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import App from './App.jsx'
-import store from './store.js'
-import { Provider } from 'react-redux'
-import { BrowserRouter as Router } from 'react-router-dom'
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import App from './App.jsx';
+import store from './store.js';
+import { Provider } from 'react-redux';
+import { BrowserRouter as Router } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 createRoot(document.getElementById('root')).render(
 	<Router>
@@ -13,4 +14,4 @@ createRoot(document.getElementById('root')).render(
 			</StrictMode>
 		</Provider>
 	</Router>
-)
+);

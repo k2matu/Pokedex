@@ -1,15 +1,16 @@
-import Pokemon from './Pokemon'
-import DetailsOfPokemon from './DetailsOfPokemon'
-import { useSelector } from 'react-redux'
+import Pokemon from './Pokemon';
+import DetailsOfPokemon from './DetailsOfPokemon';
+import { useSelector, useDispatch } from 'react-redux';
+import { Row, Col } from 'react-bootstrap';
+import { clearVisible, setVisible } from '../../reducers/pokemonReducer';
+import { useEffect, useState } from 'react';
 
 const ShowPokemon = () => {
+	const dispatch = useDispatch();
 	const pokemons = useSelector((state) => state.pokemon.pokemons);
 	const searchPokemon = useSelector((state) => state.pokemon.searchPokemon);
 	const sortType = useSelector((state) => state.pokemon.sortType);
-
-	if (!pokemons || pokemons.length === 0) {
-		return <div>No Pokemon available</div>
-	}
+	const [selectedPokemon, setSelectedPokemon] = useState(null);
 
 	const getFilteredAndSortedPokemons = () => {
 		return pokemons
@@ -27,25 +28,36 @@ const ShowPokemon = () => {
 					default:
 						return 0;
 				}
-			})
-	}
+			});
+	};
 
 	const sortedPokemons = getFilteredAndSortedPokemons();
 
-	if (sortedPokemons.length < 3 && sortedPokemons[0]) {
-		return <DetailsOfPokemon pokemon={sortedPokemons[0]} />
+	useEffect(() => {
+		if (sortedPokemons.length < 3 && sortedPokemons[0]) {
+			dispatch(clearVisible());
+			setSelectedPokemon(sortedPokemons[0]);
+		} else {
+			dispatch(setVisible());
+			setSelectedPokemon(null);
+		}
+	}, [sortedPokemons, dispatch]);
+
+	if (selectedPokemon) {
+		return <DetailsOfPokemon pokemon={selectedPokemon} />;
 	}
 
 	return (
 		<div>
-			{sortedPokemons.map((pokemon) => (
-				<div key={pokemon.index}>
-					<Pokemon pokemon={pokemon} />
-				</div>
-			))}
+			<Row>
+				{sortedPokemons.map((pokemon) => (
+					<Col key={pokemon.index} xs={12} sm={6} md={4} lg={3} className='mb-4'>
+						<Pokemon pokemon={pokemon} />
+					</Col>
+				))}
+			</Row>
 		</div>
-	)
-}
+	);
+};
 
-
-export default ShowPokemon
+export default ShowPokemon;

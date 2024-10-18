@@ -1,21 +1,22 @@
-import Header from './components/Header'
-import Footer from './components/Footer'
-import Notif from './components/Notif'
-import Path from './pages/Path'
-import { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
-import { setAuth } from './reducers/authReducer'
+import Header from './components/Header';
+import Footer from './components/Footer';
+import Notif from './components/Notif';
+import Path from './pages/Path';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { setAuth } from './reducers/authReducer';
+
 
 const App = () => {
-	const dispatch = useDispatch()
+	const dispatch = useDispatch();
 
 	useEffect(() => {
-		const loginUser = window.localStorage.getItem('username')
+		const loginUser = window.localStorage.getItem('user');
 		if (loginUser) {
-			const user = JSON.parse(loginUser)
-			dispatch(setAuth(user))
+			const user = JSON.parse(loginUser);
+			dispatch(setAuth(user));
 		}
-	}, [dispatch])
+	}, [dispatch]);
 
 	return (
 		<div>
@@ -23,8 +24,8 @@ const App = () => {
 			<Notif />
 			<Path />
 			<Footer />
-		</div>
-	)
-}
+		</div >
+	);
+};
 
-export default App
+export default App;

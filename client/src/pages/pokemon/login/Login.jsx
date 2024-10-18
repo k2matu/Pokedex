@@ -1,7 +1,7 @@
-import { useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
-import loginService from '../../../services/login'
-import Userpage from '../../user/Userpage'
+import { useForm } from 'react-hook-form';
+import { Link } from 'react-router-dom';
+import loginService from '../../../services/login';
+import Userpage from '../../user/Userpage';
 
 const Login = ({ users, user, setUser }) => {
 	const { handleSubmit, register, formState: { errors } } = useForm();
@@ -9,14 +9,14 @@ const Login = ({ users, user, setUser }) => {
 	const handleLogin = async (data) => {
 		const { username, password } = data;
 		try {
-			const user = await loginService.login({ username, password })
-			setUser(user)
+			const user = await loginService.login({ username, password });
+			setUser(user);
 			window.localStorage.setItem('username', JSON.stringify(user.username));
 
 		} catch (exception) {
-			console.log('Invalid username or password')
+			console.log('Invalid username or password');
 		}
-	}
+	};
 
 	if (user === null) {
 		return (
@@ -43,14 +43,14 @@ const Login = ({ users, user, setUser }) => {
 					<Link to='/register'> Sign up</Link>
 				</div>
 			</div>
-		)
+		);
 	}
 
 	return (
 		<div>
 			<Userpage setUser={setUser} />
 		</div>
-	)
-}
+	);
+};
 
-export default Login
+export default Login;

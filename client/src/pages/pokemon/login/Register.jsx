@@ -1,6 +1,6 @@
-import { useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
-import userService from '../../../services/user'
+import { useForm } from 'react-hook-form';
+import { Link } from 'react-router-dom';
+import userService from '../../../services/user';
 
 const Register = ({ users, setUsers }) => {
 	const {
@@ -8,7 +8,7 @@ const Register = ({ users, setUsers }) => {
 		handleSubmit,
 		formState: { errors },
 		reset,
-	} = useForm()
+	} = useForm();
 
 	const addUser = async (data) => {
 		const userObject = {
@@ -17,7 +17,7 @@ const Register = ({ users, setUsers }) => {
 			password: data.password,
 		};
 		if (users.find(user => user.username === data.username)) {
-			window.alert('This username is already taken. Please choose a different one.')
+			window.alert('This username is already taken. Please choose a different one.');
 		} else {
 			userService
 				.create(userObject)
@@ -30,7 +30,7 @@ const Register = ({ users, setUsers }) => {
 					window.alert('Failed to create user. Please try again.');
 				});
 		}
-	}
+	};
 
 	return (
 		<div>
@@ -70,7 +70,7 @@ const Register = ({ users, setUsers }) => {
 			</form>
 			<Link to='/login'>Log In</Link>
 		</div>
-	)
-}
+	);
+};
 
-export default Register
+export default Register;

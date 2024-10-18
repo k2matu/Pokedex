@@ -1,21 +1,20 @@
-import { useSelector } from "react-redux"
+import { useSelector } from "react-redux";
+import { Alert } from "react-bootstrap";
 
 const Notif = () => {
-	const notification = useSelector((state) => state.notif.notis)
+	const notification = useSelector((state) => state.notif.notis);
 	const visible = useSelector((state) => state.notif.visible);
-
-	const style = {
-		display: visible ? "" : "none",
-		border: "solid",
-		padding: 10,
-		borderWidth: 1,
-	}
+	const type = useSelector((state) => state.notif.type);
 
 	return (
-		<div style={style}>
-			{notification}
-		</div>
-	)
-}
+		<>
+			{visible && (
+				<Alert variant={type} className="mt-3">
+					{notification}
+				</Alert>
+			)}
+		</>
+	);
+};
 
 export default Notif;
