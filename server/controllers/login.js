@@ -1,36 +1,47 @@
-const jwt = require('jsonwebtoken')
-const bcrypt = require('bcryptjs')
-const loginRouter = require('express').Router()
-const pool = require('../utils/db')
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
+const loginRouter = require('express').Router();
+const pool = require('../utils/db');
+const { checkIfExist } = require('../utils/dbHelpers');
 
-loginRouter.post('/', async (req, res) => {
-	const { username, password } = req.body
-	
-	try {
-		const result = await pool.query('SELECT * FROM users WHERE username = $1', [username])
-		if (result.rows.length === 0) {
-			return res.status(401).json({error: 'Invalid username or password'})
-	}
-	
-	const passwordCorrect = await bcrypt.compare(password, result.rows[0].password_hash)
+// Helper function to check password
+const checkifPasswordCorrect = async (password, user) => {
+	const passwordCorrect = await bcrypt.compare(password, user.password_hash);
+
 	if (!passwordCorrect) {
-		return res.status(401).json({error: 'Invalid username or password'})
+		const err = new Error('Invalid username/password');
+		err.status = 401;
+		throw err;
+	}
+};
+
+// Login authenication
+loginRouter.post('/', async (req, res, next) => {
+	const { username, password } = req.body;
+	
+	if (!username || !password) {
+		return res.status(400).json({ error: 'Username and password are required' });
 	}
 
-	const userForToken = {
-		username: result.rows[0].username,
-		id: result.rows[0].id,
-	}
-	
-	const token = jwt.sign(userForToken, process.env.SECRET)
-	
-	res
-	.status(200)
-	.json({token, username: result.rows[0].username})
+	try {
+		const result = await pool.query('SELECT * FROM users WHERE username = $1', [
+			username,
+		]);
+
+		const user = checkIfExist(result, 'User');
+		await checkifPasswordCorrect(password, user);
+
+		const userForToken = {
+			username: user.username,
+			id: user.id,
+		};
+
+		const token = jwt.sign(userForToken, process.env.SECRET);
+
+		res.status(200).json({ token, username: user.username });
 	} catch (err) {
-		console.error(err)
-		res.status(500).json({error: 'Internal server error1'})
+		next(err);
 	}
-})
+});
 
-module.exports = loginRouter
+module.exports = loginRouter;
