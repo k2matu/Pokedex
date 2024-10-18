@@ -25,13 +25,26 @@ const handleLike = async (pokemonName, decodedToken) => {
 	const userId = user.id;
 	const pokemonId = pokemon.id;
 
-	await pool.query(
-		`INSERT INTO user_pokemon (user_id, pokemon_id, liked)
-					VALUES ($1, $2, TRUE)
-					ON CONFLICT (user_id, pokemon_id) 
-					DO UPDATE SET liked = EXCLUDED.liked;`,
-		[userId, pokemonId],
-	);
+	const userPokemonResult = await pool.query(`
+		SELECT * FROM user_pokemon
+		WHERE user_id = $1 AND pokemon_id = $2;`,
+		[user.id, pokemon.id])
+		
+		if (userPokemonResult.rows.length > 0) {
+			await pool.query(`
+				DELETE FROM user_pokemon WHERE user_id = $1 and pokemon_id = $2;`,
+				[userId, pokemonId]
+			);
+
+		} else {
+			await pool.query(
+				`INSERT INTO user_pokemon (user_id, pokemon_id, liked)
+							VALUES ($1, $2, TRUE)
+							ON CONFLICT (user_id, pokemon_id) 
+							DO UPDATE SET liked = EXCLUDED.liked;`,
+				[userId, pokemonId],
+			);
+		}
 };
 
 // Create a new like
@@ -81,30 +94,6 @@ likesRouter.get('/:userName', async (req, res, next) => {
 		const likes = checkIfExist(result, 'Likes');
 
 		res.json(likes.rows);
-	} catch (err) {
-		next(err);
-	}
-});
-
-// Delete a like
-likesRouter.delete('/:pokemonName', async (req, res, next) => {
-	const { pokemonName } = req.params;
-
-	try {
-		const token = getTokenFrom(req);
-		const decodedToken = await validateToken(token);
-
-		const pokemonResult = await pool.query(
-			'SELECT id FROM pokemons WHERE name = $1;',
-			[pokemonName],
-		);
-		const pokemon = checkIfExist(pokemonResult, 'Pokemon');
-
-		await pool.query(
-			`DELETE FROM user_pokemon WHERE user_id = $1 AND pokemon_id = $2;`,
-			[decodedToken.id, pokemon.id],
-		);
-		return res.status(200).json({ message: 'Like deleted successfully!' });
 	} catch (err) {
 		next(err);
 	}

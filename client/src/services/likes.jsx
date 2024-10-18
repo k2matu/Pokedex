@@ -4,7 +4,7 @@ const baseUrl = 'http://localhost:3001/api/likes';
 let token = null;
 
 const setToken = newToken => {
-	token = `Bearer ${newToken}`;
+	return `Bearer ${newToken}`;
 };
 
 const getAll = () => {
@@ -18,9 +18,10 @@ const getOne = (name) => {
 };
 
 const create = (newObject, token) => {
+	const validToken = setToken(token);
 	const req = axios.post(baseUrl, newObject, {
 		headers: {
-			Authorization: token,
+			Authorization: validToken,
 		},
 	});
 	return req.then(res => res.data);

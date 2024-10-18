@@ -15,8 +15,6 @@ const Pokemon = ({ pokemon }) => {
 			const response = await likesService.create(likeData, loginUser.token);
 			if (response.status === 200) {
 				console.log("Like added successfully!");
-			} else {
-				console.log("Failed to add like.");
 			}
 		} catch (error) {
 			console.error("Error while liking the Pokémon:", error);
