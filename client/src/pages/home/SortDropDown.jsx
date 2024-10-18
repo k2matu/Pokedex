@@ -7,12 +7,13 @@ const SortDropDown = () => {
 	const dispatch = useDispatch();
 
 	const visible = useSelector((state) => state.pokemon.visible);
+	const notisVisible = useSelector((state) => state.notif.visible);
 
 	const handleSortChange = (sortValue) => {
 		dispatch(setSortType(sortValue));
 	};
 
-	if (!visible) {
+	if (!visible || notisVisible) {
 		return null;
 	}
 	return (

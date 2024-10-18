@@ -17,7 +17,7 @@ const getOne = (name) => {
 	return req.then(res => res.data);
 };
 
-const create = (newObject, token) => {
+const likeOrUnlike = (newObject, token) => {
 	const validToken = setToken(token);
 	const req = axios.post(baseUrl, newObject, {
 		headers: {
@@ -27,13 +27,4 @@ const create = (newObject, token) => {
 	return req.then(res => res.data);
 };
 
-const remove = (pokemonName) => {
-	const req = axios.delete(`${baseUrl}/${pokemonName}`, {
-		headers: {
-			Authorization: token,
-		},
-	});
-	return req.then(res => res.data);
-};
-
-export default { setToken, getAll, getOne, create, remove };
+export default { setToken, getAll, getOne, likeOrUnlike };

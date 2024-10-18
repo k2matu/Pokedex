@@ -12,7 +12,7 @@ const Pokemon = ({ pokemon }) => {
 			pokemonName: pokemon.name
 		};
 		try {
-			const response = await likesService.create(likeData, loginUser.token);
+			const response = await likesService.likeOrUnlike(likeData, loginUser.token);
 			if (response.status === 200) {
 				console.log("Like added successfully!");
 			}
