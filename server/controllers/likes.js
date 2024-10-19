@@ -3,12 +3,12 @@ const pool = require('../utils/db');
 const { getTokenFrom, validateToken } = require('../utils/auth');
 const { checkIfExist } = require('../utils/dbHelpers');
 
-const handleLike = async (pokemonName, decodedToken) => {
+const handleLike = async (pokemonName, decodedToken, index) => {
 	await pool.query(
-		`INSERT INTO pokemons (name)
-					VALUES ($1)
+		`INSERT INTO pokemons (name, index)
+					VALUES ($1, $2)
 					ON CONFLICT (name) DO NOTHING;`,
-		[pokemonName],
+		[pokemonName, index],
 	);
 
 	const pokemonResult = await pool.query(
@@ -49,12 +49,12 @@ const handleLike = async (pokemonName, decodedToken) => {
 
 // Create a new like
 likesRouter.post('/', async (req, res, next) => {
-	const { pokemonName } = req.body;
+	const { pokemonName, index } = req.body;
 
 	try {
 		const token = getTokenFrom(req);
 		const decodedToken = await validateToken(token);
-		await handleLike(pokemonName, decodedToken);
+		await handleLike(pokemonName, decodedToken, index);
 		return res.status(200).json({ message: 'Like added successfully!' });
 	} catch (err) {
 		next(err);
@@ -83,7 +83,7 @@ likesRouter.get('/:userName', async (req, res, next) => {
 	try {
 		const result = await pool.query(
 			`
-			SELECT pokemons.name
+			SELECT pokemons.name, pokemons.index
 			FROM users
 			JOIN user_pokemon ON users.id = user_pokemon.user_id
 			JOIN pokemons ON pokemons.id = user_pokemon.pokemon_id

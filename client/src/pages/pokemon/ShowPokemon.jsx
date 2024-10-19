@@ -57,16 +57,17 @@ const ShowPokemon = () => {
 	}
 
 	return (
-		<div>
-			<Row>
-				{sortedPokemons.map((pokemon) => (
+		<Row>
+			{sortedPokemons.map((pokemon) => {
+				const isLiked = likedPokemons.some(liked => liked.name === pokemon.name);
+				return (
 					<Col key={pokemon.index} xs={12} sm={6} md={4} lg={3} className='mb-4'>
-						<Pokemon pokemon={pokemon} />
+						<Pokemon pokemon={pokemon} likeStatus={isLiked} />
 					</Col>
-				))}
-			</Row>
-		</div>
+				);
+			})}
+		</Row>
 	);
-};
+}
 
 export default ShowPokemon;

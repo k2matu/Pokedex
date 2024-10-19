@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import { getPokemonInfo } from '../../reducers/pokemonReducer';
 import { Card, Container, Row, Col, Badge } from 'react-bootstrap';
 import InfoDisplay from './InfoDisplay';
+import Spinner from 'react-bootstrap/Spinner';
 
 const DetailsOfPokemon = ({ pokemon }) => {
 	const dispatch = useDispatch();
@@ -21,8 +22,8 @@ const DetailsOfPokemon = ({ pokemon }) => {
 
 	if (!pokemonInfo) {
 		return (
-			<div>Loading ...</div>
-		)
+			< Spinner animation="border" />
+		);
 	}
 
 	return (

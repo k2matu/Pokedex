@@ -1,20 +1,17 @@
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
-import loginService from '../../../services/login';
-import Userpage from '../../user/Userpage';
+import { useDispatch, useSelector } from 'react-redux';
+import { handleLogin } from '../../../reducers/authReducer';
 
-const Login = ({ users, user, setUser }) => {
+const Login = () => {
+	const dispatch = useDispatch();
+	const user = useSelector((state) => state.auth.user);
 	const { handleSubmit, register, formState: { errors } } = useForm();
 
-	const handleLogin = async (data) => {
-		const { username, password } = data;
-		try {
-			const user = await loginService.login({ username, password });
-			setUser(user);
-			window.localStorage.setItem('username', JSON.stringify(user.username));
-
-		} catch (exception) {
-			console.log('Invalid username or password');
+	const onHandleLogin = async (data) => {
+		const success = await dispatch(handleLogin(data));
+		if (success) {
+			Navigate('/');
 		}
 	};
 
@@ -22,7 +19,7 @@ const Login = ({ users, user, setUser }) => {
 		return (
 			<div>
 				<h3>Login</h3>
-				< form onSubmit={handleSubmit(handleLogin)}>
+				< form onSubmit={handleSubmit(onHandleLogin)}>
 					<input
 						placeholder='Username'
 						{...register('username', {
@@ -45,12 +42,6 @@ const Login = ({ users, user, setUser }) => {
 			</div>
 		);
 	}
-
-	return (
-		<div>
-			<Userpage setUser={setUser} />
-		</div>
-	);
 };
 
 export default Login;

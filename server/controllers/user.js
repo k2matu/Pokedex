@@ -8,7 +8,7 @@ const { checkIfPasswordCorrect } = require('../utils/auth');
 userRouter.get('/', async (req, res, next) => {
 	try {
 		const result = await pool.query(
-			`SELECT "username", "email", "id" FROM users;`,
+			`SELECT * FROM users;`,
 		);
 
 		res.json(result.rows);

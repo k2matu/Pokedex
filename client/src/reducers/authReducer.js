@@ -32,11 +32,11 @@ export const handleLogin = (data) => {
 		const { username, password } = data;
 		try {
 			const user = await loginService.login({ username, password });
-				dispatch(setAuth(user));
-				dispatch(removing());
-				likesService.setToken(loginUser.token);
-				window.localStorage.setItem('user', JSON.stringify(user));
-				return true;
+			dispatch(setAuth(user));
+			dispatch(removing());
+			likesService.setToken(user.token);
+			window.localStorage.setItem('user', JSON.stringify(user));
+			return true;
 		} catch (exception) {
 			dispatch(notif('Invalid username or password', 60, 'danger'));
 			return false;
@@ -75,8 +75,8 @@ export const updateUserName = (data) => {
 		dispatch(notif('Could not change username', 60, 'danger'));
 		console.error('Error during username change:', exception);
 		return false;
-	}
-};
+		}
+	};
 };
 
 export default authSlice.reducer;

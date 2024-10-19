@@ -1,20 +1,46 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { setSearchPokemon } from '../../reducers/pokemonReducer';
-import Form from 'react-bootstrap/Form';
+import { clearSearch, setSearchUser } from '../../reducers/userReducer';
+import { Form, InputGroup, DropdownButton, Dropdown } from 'react-bootstrap';
+import { useState } from 'react';
 
 const SearchInput = () => {
 	const dispatch = useDispatch();
+	const [searchType, setSearchType] = useState('pokemon');
 
+	const user = useSelector((state) => state.auth.user);
 	const searchPokemon = useSelector((state) => state.pokemon.searchPokemon);
+	const searchUser = useSelector((state) => state.user.searchUser);
+
+	const handleSearch = (e) => {
+		if (searchType === 'pokemon') {
+			dispatch(clearSearch());
+			dispatch(setSearchPokemon(e.target.value));
+		} else {
+			dispatch(setSearchUser(e.target.value));
+		}
+	};
 
 	return (
-		<Form.Control
-			type="text"
-			value={searchPokemon}
-			placeholder="Search"
-			onChange={(e) => dispatch(setSearchPokemon(e.target.value))}
-			className="mr-sm-2"
-		/>
+		<InputGroup>
+			<Form.Control
+				type="text"
+				value=
+				{searchType === 'pokemon' ? searchPokemon : searchUser}
+				placeholder={`Search ${searchType}`}
+				onChange={handleSearch}
+				className="mr-sm-2"
+			/>
+			{user && <DropdownButton
+				variant="outline-secondary"
+				title=""
+				id="input-group-dropdown-2"
+				align="end"
+			>
+				<Dropdown.Item onClick={() => setSearchType('pokemon')}>Pokemon</Dropdown.Item>
+				<Dropdown.Item onClick={() => setSearchType('user')}>User</Dropdown.Item>
+			</DropdownButton>}
+		</InputGroup>
 	);
 };
 

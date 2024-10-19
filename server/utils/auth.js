@@ -25,7 +25,6 @@ const validateToken = (token) => {
 
 const checkIfPasswordCorrect = async (password, user) => {
 	const passwordCorrect = await bcrypt.compare(password, user.password_hash);
-
 	if (!passwordCorrect) {
 		const err = new Error('Invalid username/password');
 		err.status = 401;

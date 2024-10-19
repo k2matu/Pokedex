@@ -1,31 +1,39 @@
 import { useSelector, useDispatch } from 'react-redux';
 import Pokemon from '../pokemon/Pokemon';
-import { Row, Col } from 'react-bootstrap';
-import { useEffect, useState } from 'react';
+import { Row, Col, Container } from 'react-bootstrap';
+import { useEffect } from 'react';
 import { initializeLikes } from '../../reducers/likesReducer';
 
-const ShowFavorite = () => {
+const ShowFavorite = ({ user, isTrue }) => {
 	const dispatch = useDispatch();
-	const user = useSelector((state) => state.auth.user);
 	const likedPokemons = useSelector((state) => state.likes);
 
 	useEffect(() => {
-		if (user && likedPokemons.length === 0) {
+		if (user) {
 			dispatch(initializeLikes(user));
 		}
-	}, [dispatch, user, likedPokemons]);
+	}, [dispatch, user]);
 
 	return (
-		<div>
-			<h3>Favorite</h3>
+		<Container className="mt-4">
+			{isTrue && (
+				<h3 className="text-center mb-4">{user}</h3>
+			)}
+			<h3 className="text-center mb-4">Favorite</h3>
 			<Row>
-				{likedPokemons.map((pokemon) => (
-					<Col key={pokemon.name} xs={12} sm={6} md={4} lg={3} className='mb-4'>
-						<Pokemon pokemon={pokemon} />
+				{likedPokemons.length > 0 ? (
+					likedPokemons.map((pokemon) => (
+						<Col key={pokemon.name} xs={12} sm={6} md={4} lg={3} className='mb-4'>
+							<Pokemon pokemon={pokemon} />
+						</Col>
+					))
+				) : (
+					<Col className="text-center mb-4" xs={12}>
+						<p>No favorite Pokémon found.</p>
 					</Col>
-				))}
+				)}
 			</Row>
-		</div>
+		</Container >
 	);
 };
 

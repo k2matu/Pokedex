@@ -15,13 +15,12 @@ const Header = ({ text }) => {
 				</Nav>
 				<SearchInput />
 				<Nav className="ms-auto">
-					{!user && (
+					{!user ? (
 						<>
 							<Nav.Link href="/login">Login</Nav.Link>
 							<Nav.Link href="/register">Register</Nav.Link>
 						</>
-					)}
-					{user && (
+					) : (
 						<>
 							<Nav.Link href="/profile">Profile</Nav.Link>
 							<Logout />

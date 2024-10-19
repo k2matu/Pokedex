@@ -21,6 +21,7 @@ loginRouter.post('/', async (req, res, next) => {
 		);
 
 		const user = checkIfExist(result, 'User');
+
 		await checkIfPasswordCorrect(password, user);
 
 		const userForToken = {

@@ -24,6 +24,7 @@ pokemonRouter.get('/:name', async (req, res) => {
 			name: ability.name,
 		}));
 
+		const id = data.id;
 		const weight = data.weight;
 		const height = data.height;
 		const types = data.types.map(({ type }) => ({
@@ -31,6 +32,7 @@ pokemonRouter.get('/:name', async (req, res) => {
 		}));
 
 		const response = {
+			id,
 			abilities,
 			weight,
 			height,

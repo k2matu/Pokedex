@@ -4,10 +4,12 @@ import { initializePokemons } from '../../reducers/pokemonReducer';
 import ShowPokemon from '../pokemon/ShowPokemon';
 import SortDropDown from './SortDropDown';
 import Container from 'react-bootstrap/Container';
+import SearchUser from './SearchUser';
 
 const Home = () => {
 	const dispatch = useDispatch();
 	const pokemons = useSelector((state) => state.pokemon.pokemons);
+	const searchUser = useSelector((state) => state.user.search);
 
 	useEffect(() => {
 		if (pokemons.length === 0) {
@@ -17,8 +19,15 @@ const Home = () => {
 
 	return (
 		<Container className="my-2">
-			<SortDropDown />
-			<ShowPokemon />
+			{!searchUser ? (
+				<>
+					<SortDropDown />
+					<ShowPokemon />
+				</>
+			) :
+				<>
+					<SearchUser />
+				</>}
 		</Container>
 	);
 };

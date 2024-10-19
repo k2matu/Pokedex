@@ -2,22 +2,34 @@ import { createSlice } from '@reduxjs/toolkit';
 import userService from '../services/user';
 import { notif } from './notifReducer';
 
-const initialState = [];
+const initialState = {
+	users: [],
+	searchUser: '',
+	search: false,
+};
 
 const userSlice = createSlice({
 	name: 'user',
 	initialState,
 	reducers: {
 		setUsers: (state, action) => {
-			return action.payload;
+			state.users = action.payload;
 		},
 		appendUser: (state, action) => {
-			state.push(action.payload);
+			state.users.push(action.payload);
+		},
+		setSearchUser: (state, action) => {
+			state.searchUser = action.payload;
+			state.search = true;
+		},
+		clearSearch: (state, action) => {
+			state.searchUser = '';
+			state.search = false;
 		}
 	}
 });
 
-export const {setUsers, appendUser} = userSlice.actions;
+export const {setUsers, appendUser, setSearchUser, clearSearch} = userSlice.actions;
 
 export const initializeUsers = () => {
 	return async (dispatch) => {
@@ -35,7 +47,7 @@ export const initializeUsers = () => {
 export const createUser = (user) => {
 	return async (dispatch, getState) => {
 		try {
-			const users = getState();
+			const users = getState().user.users;
 			const userExist = users.find(u => u.username === user.username);
 			if (userExist) {
 				dispatch(notif('This username is already taken. Please choose a different one.', 60, 'light'));
