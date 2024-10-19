@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Row, Col } from 'react-bootstrap';
 import { clearVisible, setVisible } from '../../reducers/pokemonReducer';
 import { useEffect, useState } from 'react';
+import { initializeLikes } from '../../reducers/likesReducer';
 
 const ShowPokemon = () => {
 	const dispatch = useDispatch();
@@ -11,6 +12,14 @@ const ShowPokemon = () => {
 	const searchPokemon = useSelector((state) => state.pokemon.searchPokemon);
 	const sortType = useSelector((state) => state.pokemon.sortType);
 	const [selectedPokemon, setSelectedPokemon] = useState(null);
+	const user = useSelector((state) => state.auth.user);
+	const likedPokemons = useSelector((state) => state.likes);
+
+	useEffect(() => {
+		if (user && likedPokemons.length === 0) {
+			dispatch(initializeLikes(user));
+		}
+	}, [dispatch, user, likedPokemons]);
 
 	const getFilteredAndSortedPokemons = () => {
 		return pokemons

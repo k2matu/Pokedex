@@ -83,17 +83,16 @@ likesRouter.get('/:userName', async (req, res, next) => {
 	try {
 		const result = await pool.query(
 			`
-			SELECT users.username, pokemons.name
+			SELECT pokemons.name
 			FROM users
 			JOIN user_pokemon ON users.id = user_pokemon.user_id
 			JOIN pokemons ON pokemons.id = user_pokemon.pokemon_id
 			WHERE users.username = $1 AND user_pokemon.liked = TRUE;`,
 			[userName],
 		);
-
-		const likes = checkIfExist(result, 'Likes');
-
-		res.json(likes.rows);
+		
+		checkIfExist(result, 'Pokemon likes');
+		res.json(result.rows);
 	} catch (err) {
 		next(err);
 	}
