@@ -6,7 +6,14 @@ import { useLogout } from '../utils/authUtils';
 
 const Header = ({ text }) => {
 	const navigate = useNavigate();
+	const navigate = useNavigate();
 	const user = useSelector((state) => state.auth.user);
+
+	const handleLogout = useLogout();
+
+	const onLogoutClick = () => {
+		handleLogout();
+	};
 
 	const handleLogout = useLogout();
 
@@ -40,11 +47,21 @@ const Header = ({ text }) => {
 								<NavDropdown.Item onClick={() => navigate('/settings')}>Settings</NavDropdown.Item>
 								<NavDropdown.Item onClick={onLogoutClick}>Logout</NavDropdown.Item>
 							</NavDropdown>
+							<NavDropdown
+								variant="outline-secondary"
+								title=""
+								id="input-group-dropdown-2"
+								align="end"
+							>
+								<NavDropdown.Item onClick={() => navigate('/settings')}>Settings</NavDropdown.Item>
+								<NavDropdown.Item onClick={onLogoutClick}>Logout</NavDropdown.Item>
+							</NavDropdown>
 						</>
 					)}
 				</Nav>
 			</Container>
 		</Navbar>
+		</Navbar >
 	);
 };
 
