@@ -3,7 +3,7 @@ import LikeButton from './LikeButton';
 import { useSelector } from 'react-redux';
 
 const Pokemon = ({ pokemon }) => {
-	const search = useSelector((state) => state.user.search)
+	const search = useSelector((state) => state.user.search);
 
 	return (
 		<Card style={{ width: '15rem' }}>

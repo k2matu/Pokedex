@@ -3,7 +3,6 @@ const config = [
 	{
 		languageOptions: {
 			globals: {
-				// Define global variables here
 				document: 'readonly',
 				window: 'readonly',
 				process: 'readonly',
@@ -13,7 +12,7 @@ const config = [
 				sourceType: 'module',
 			},
 		},
-		files: ['**/*.js'], // Specify the files to which this config applies
+		files: ['**/*.js'],
 		rules: {
 			'no-console': 'warn',
 		},

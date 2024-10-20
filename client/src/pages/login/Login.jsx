@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { handleLogin } from
 	'../../reducers/authReducer';
-import { Container, Row, Col, Form, Button, Alert } from 'react-bootstrap';
+import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 
 const Login = () => {
 	const dispatch = useDispatch();
@@ -26,13 +26,13 @@ const Login = () => {
 	};
 
 	return (
-		<Container className="mt-5">
-			<Row className="justify-content-center">
-				<Col md={6}>
-					<h3 className="text-center">Login</h3>
+		<Container fluid style={{ height: '100vh' }} className="d-flex align-items-center">
+			<Row className="w-100">
+				<Col md={4} className="offset-md-6">
+					<h3 className="text-center text-white">Login</h3>
 					<Form onSubmit={handleSubmit(onLoginSubmit)}>
 						<Form.Group controlId="formUsername">
-							<Form.Label>Username</Form.Label>
+							<Form.Label className="text-white">Username</Form.Label>
 							<Form.Control
 								type="text"
 								placeholder="Enter username"
@@ -41,7 +41,7 @@ const Login = () => {
 							{errors.username && <p className="text-danger">Username is required</p>}
 						</Form.Group>
 						<Form.Group controlId="formPassword">
-							<Form.Label className='my-2'>Password</Form.Label>
+							<Form.Label className='my-2 text-white'>Password</Form.Label>
 							<Form.Control
 								type="password"
 								placeholder="Password"
@@ -49,12 +49,14 @@ const Login = () => {
 							/>
 							{errors.password && <p className="text-danger">Password is required</p>}
 						</Form.Group>
-						<Button variant="primary" type="submit" className="mt-3">
-							Login
-						</Button>
+						<div className="text-center mt-3">
+							<Button variant="light" type="submit" className="mt-3">
+								Login
+							</Button>
+						</div>
 					</Form>
-					<div className="mt-3 text-center">
-						Don't have an account? <Link to="/register">Sign up</Link>
+					<div className="mt-3 text-center text-white">
+						Don't have an account? <Link to="/register" className="text-black">Sign up</Link>
 					</div>
 				</Col>
 			</Row>

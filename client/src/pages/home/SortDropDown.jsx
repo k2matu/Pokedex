@@ -1,7 +1,6 @@
 import { setSortType } from '../../reducers/pokemonReducer';
 import { useSelector, useDispatch } from 'react-redux';
 import Dropdown from 'react-bootstrap/Dropdown';
-import DropdownButton from 'react-bootstrap/DropdownButton';
 
 const SortDropDown = () => {
 	const dispatch = useDispatch();
@@ -16,6 +15,7 @@ const SortDropDown = () => {
 	if (!visible || notisVisible) {
 		return null;
 	}
+
 	return (
 		<>
 			<Dropdown className="d-inline mx-2">

@@ -16,15 +16,14 @@ export default [
         sourceType: 'module',
       },
     },
-    settings: { react: { version: 'detect' } }, // Automatically detects React version
+    settings: { react: { version: 'detect' } },
     plugins: {
-      react,          // Import the plugin object
-      'react-hooks': reactHooks, // Import the plugin object
-      'react-refresh': reactRefresh, // Import the plugin object
+      react,
+      'react-hooks': reactHooks,
+      'react-refresh': reactRefresh,
     },
     rules: {
-      'semi': ['error', 'always'], // Enforce semicolons
-      // Add any additional rules you want here
+      'semi': ['error', 'always'],
     },
   },
 ];

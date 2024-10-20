@@ -7,13 +7,13 @@ const Notif = () => {
 	const type = useSelector((state) => state.notif.type);
 
 	return (
-		<>
+		<div className="m-0">
 			{visible && (
-				<Alert variant={type} className="mt-3">
+				<Alert variant={type} className="m-0">
 					{notification}
 				</Alert>
 			)}
-		</>
+		</div>
 	);
 };
 

@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import ShowFavorite from './ShowFavorite';
-import { Row, Col, Container, Button, Image } from 'react-bootstrap';
+import { Row, Col, Container } from 'react-bootstrap';
 
 const Profile = () => {
 	const navigate = useNavigate();
@@ -18,13 +18,16 @@ const Profile = () => {
 							width: '130px',
 							height: '130px',
 							borderRadius: '50%',
-							backgroundColor: '#f8f9fa',
+							backgroundColor: 'white',
 							color: 'black',
 							display: 'flex',
 							justifyContent: 'center',
 							alignItems: 'center',
 							fontSize: '3rem',
 							fontWeight: 'bold',
+							borderColor: 'black',
+							borderWidth: '1px',
+							borderStyle: 'solid',
 						}}
 					>
 						{firstLetter}
@@ -32,13 +35,6 @@ const Profile = () => {
 				</Col>
 			</Row>
 			<h2 className="mt-2">{user}</h2>
-			<Button
-				variant="light"
-				className="btn btn-outline-dark m-2 p-2"
-				onClick={() => navigate('/settings')}
-			>
-				settings
-			</Button>
 			<ShowFavorite user={user} />
 		</Container>
 	);

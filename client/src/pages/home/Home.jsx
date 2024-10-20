@@ -18,17 +18,18 @@ const Home = () => {
 	}, [dispatch]);
 
 	return (
-		<Container className="my-2">
+		<Container className="my-2 mx-center">
 			{!searchUser ? (
 				<>
 					<SortDropDown />
 					<ShowPokemon />
 				</>
-			) :
+			) : (
 				<>
 					<SearchUser />
-				</>}
-		</Container>
+				</>
+			)}
+		</Container >
 	);
 };
 

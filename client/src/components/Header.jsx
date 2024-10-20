@@ -1,10 +1,18 @@
 import { useSelector } from 'react-redux';
-import Logout from '../pages/user/Logout';
-import { Navbar, Container, Nav } from 'react-bootstrap';
+import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
 import SearchInput from '../pages/Home/SearchInput';
+import { useNavigate } from 'react-router-dom';
+import { useLogout } from '../utils/authUtils';
 
 const Header = ({ text }) => {
+	const navigate = useNavigate();
 	const user = useSelector((state) => state.auth.user);
+
+	const handleLogout = useLogout();
+
+	const onLogoutClick = () => {
+		handleLogout();
+	};
 
 	return (
 		<Navbar bg="light" data-bs-theme="light">
@@ -23,12 +31,20 @@ const Header = ({ text }) => {
 					) : (
 						<>
 							<Nav.Link href="/profile">Profile</Nav.Link>
-							<Logout />
+							<NavDropdown
+								variant="outline-secondary"
+								title=""
+								id="input-group-dropdown-2"
+								align="end"
+							>
+								<NavDropdown.Item onClick={() => navigate('/settings')}>Settings</NavDropdown.Item>
+								<NavDropdown.Item onClick={onLogoutClick}>Logout</NavDropdown.Item>
+							</NavDropdown>
 						</>
 					)}
 				</Nav>
 			</Container>
-		</Navbar >
+		</Navbar>
 	);
 };
 

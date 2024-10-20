@@ -25,26 +25,28 @@ const handleLike = async (pokemonName, decodedToken, index) => {
 	const userId = user.id;
 	const pokemonId = pokemon.id;
 
-	const userPokemonResult = await pool.query(`
+	const userPokemonResult = await pool.query(
+		`
 		SELECT * FROM user_pokemon
 		WHERE user_id = $1 AND pokemon_id = $2;`,
-		[user.id, pokemon.id])
-		
-		if (userPokemonResult.rows.length > 0) {
-			await pool.query(`
-				DELETE FROM user_pokemon WHERE user_id = $1 and pokemon_id = $2;`,
-				[userId, pokemonId]
-			);
+		[user.id, pokemon.id],
+	);
 
-		} else {
-			await pool.query(
-				`INSERT INTO user_pokemon (user_id, pokemon_id, liked)
+	if (userPokemonResult.rows.length > 0) {
+		await pool.query(
+			`
+				DELETE FROM user_pokemon WHERE user_id = $1 and pokemon_id = $2;`,
+			[userId, pokemonId],
+		);
+	} else {
+		await pool.query(
+			`INSERT INTO user_pokemon (user_id, pokemon_id, liked)
 							VALUES ($1, $2, TRUE)
 							ON CONFLICT (user_id, pokemon_id) 
 							DO UPDATE SET liked = EXCLUDED.liked;`,
-				[userId, pokemonId],
-			);
-		}
+			[userId, pokemonId],
+		);
+	}
 };
 
 // Create a new like
@@ -90,7 +92,7 @@ likesRouter.get('/:userName', async (req, res, next) => {
 			WHERE users.username = $1 AND user_pokemon.liked = TRUE;`,
 			[userName],
 		);
-		
+
 		checkIfExist(result, 'Pokemon likes');
 		res.json(result.rows);
 	} catch (err) {

@@ -3,9 +3,10 @@ import AbilityDisplay from './AbilityDisplay';
 import TypeDisplay from './TypeDisplay';
 import { useEffect } from 'react';
 import { getPokemonInfo } from '../../reducers/pokemonReducer';
-import { Card, Container, Row, Col, Badge } from 'react-bootstrap';
+import { Card, Container, Row, Col } from 'react-bootstrap';
 import InfoDisplay from './InfoDisplay';
 import Spinner from 'react-bootstrap/Spinner';
+import LikeButton from './LikeButton';
 
 const DetailsOfPokemon = ({ pokemon }) => {
 	const dispatch = useDispatch();
@@ -13,6 +14,7 @@ const DetailsOfPokemon = ({ pokemon }) => {
 	const pokemonInfo = useSelector((state) =>
 		state.pokemon.info.find((p) => p.name === pokemon.name)
 	);
+	const likedPokemons = useSelector((state) => state.likes);
 
 	useEffect(() => {
 		if (!pokemonInfo) {
@@ -25,6 +27,8 @@ const DetailsOfPokemon = ({ pokemon }) => {
 			< Spinner animation="border" />
 		);
 	}
+
+	const isLiked = likedPokemons.some(liked => liked.name === pokemon.name);
 
 	return (
 		<Container className="my-5">
@@ -44,7 +48,8 @@ const DetailsOfPokemon = ({ pokemon }) => {
 					<Card className="shadow-lg border-0 rounded h-100">
 						<Card.Body>
 							<Card.Title className="text-center display-4">
-								{pokemon.name} {`#${pokemon.index}`}
+								{pokemon.name} {`#${pokemon.index}  `}
+								<LikeButton pokemon={pokemon} />
 							</Card.Title>
 							<TypeDisplay types={pokemonInfo.info.types} />
 							<AbilityDisplay abilities={pokemonInfo.info.abilities} />

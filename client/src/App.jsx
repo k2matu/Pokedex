@@ -7,7 +7,6 @@ import { useDispatch } from 'react-redux';
 import { setAuth } from './reducers/authReducer';
 import likesService from './services/likes';
 
-
 const App = () => {
 	const dispatch = useDispatch();
 
@@ -21,7 +20,7 @@ const App = () => {
 	}, [dispatch]);
 
 	return (
-		<div>
+		<div className="d-flex flex-column min-vh-100">
 			<Header text='Pokedex App' />
 			<Notif />
 			<Path />

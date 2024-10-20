@@ -27,18 +27,18 @@ const SearchInput = () => {
 				type="text"
 				value=
 				{searchType === 'pokemon' ? searchPokemon : searchUser}
-				placeholder={`Search ${searchType}`}
+				placeholder={`Search`}
 				onChange={handleSearch}
 				className="mr-sm-2"
 			/>
 			{user && <DropdownButton
 				variant="outline-secondary"
-				title=""
+				title={`${searchType}`}
 				id="input-group-dropdown-2"
 				align="end"
 			>
-				<Dropdown.Item onClick={() => setSearchType('pokemon')}>Pokemon</Dropdown.Item>
-				<Dropdown.Item onClick={() => setSearchType('user')}>User</Dropdown.Item>
+				<Dropdown.Item onClick={() => setSearchType('pokemon')}>pokemon</Dropdown.Item>
+				<Dropdown.Item onClick={() => setSearchType('user')}>user</Dropdown.Item>
 			</DropdownButton>}
 		</InputGroup>
 	);

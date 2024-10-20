@@ -7,9 +7,7 @@ const { checkIfPasswordCorrect } = require('../utils/auth');
 // Get all users
 userRouter.get('/', async (req, res, next) => {
 	try {
-		const result = await pool.query(
-			`SELECT * FROM users;`,
-		);
+		const result = await pool.query(`SELECT * FROM users;`);
 
 		res.json(result.rows);
 	} catch (err) {
@@ -60,14 +58,14 @@ userRouter.delete('/:username', async (req, res, next) => {
 // Create a new user
 userRouter.post('/', async (req, res, next) => {
 	const { email, username, password } = req.body;
-	const saltRounds = 10;
+	const saltrounds = parseInt(process.env.SALT_ROUNDS, 10);
 
 	if (!username || !email || !password) {
 		return res.status(400).json({ error: 'All fields are required' });
 	}
 
 	try {
-		const passwordHash = await bcrypt.hash(password, saltRounds);
+		const passwordHash = await bcrypt.hash(password, saltrounds);
 
 		const result = await pool.query(
 			'INSERT INTO users (username, email, password_hash) VALUES ($1, $2, $3) RETURNING *;',
@@ -89,7 +87,7 @@ userRouter.post('/', async (req, res, next) => {
 userRouter.patch('/:username/password', async (req, res, next) => {
 	const { username } = req.params;
 	const { oldPassword, newPassword } = req.body;
-	const saltRounds = 10;
+	const saltrounds = parseInt(process.env.SALT_ROUNDS, 10);
 
 	if (!newPassword || !oldPassword) {
 		return res
@@ -106,7 +104,7 @@ userRouter.patch('/:username/password', async (req, res, next) => {
 
 		await checkIfPasswordCorrect(oldPassword, user);
 
-		const passwordHash = await bcrypt.hash(newPassword, saltRounds);
+		const passwordHash = await bcrypt.hash(newPassword, saltrounds);
 
 		const result = await pool.query(
 			'UPDATE users SET password_hash = $1 WHERE username = $2 RETURNING *;',
@@ -135,7 +133,7 @@ userRouter.patch('/:oldUser/username', async (req, res, next) => {
 
 	try {
 		const result = await pool.query(
-			'UPDATE users SET username = $1 WHERE id = $2 RETURNING *;',
+			'UPDATE users SET username = $1 WHERE username = $2 RETURNING *;',
 			[username, oldUser],
 		);
 

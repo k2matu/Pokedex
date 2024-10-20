@@ -1,4 +1,4 @@
-import {createSlice} from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { notif, removing } from './notifReducer';
 import loginService from '../services/login';
 import userService from '../services/user';

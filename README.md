@@ -15,7 +15,7 @@ The goal of this coding challenge is to put to work all the things students have
 2. Passwords need to be stored encrypted (NO MD5) +
 3. If you’re feeling up to the challenge you can add email with email confirmation
 4. A homepage with a list of pokemons +
-5. Check pagination or infinite scroll
+5. Check pagination or infinite scroll +
 6. You need to be able to sort the pokemons by name +
 7. If you are up to the challenge find other ways to sort them (number of likes for example) or group them by type and so on +
 8. A “search pokemon” feature +
