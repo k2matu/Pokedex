@@ -1,34 +1,35 @@
-### https://pokedex-k2matu.fly.dev/
+# Pokédex App
+https://pokedex-k2matu.fly.dev/
 
-# Web Express Coding Challenge
-The goal of this coding challenge is to put to work all the things students have learned during the WebDev workshops by building a Pokédex app.
+## Overview
+The Pokédex App is a web application that allows users to browse Pokémon, view various information about them, and save their favorite Pokémon. This application includes user authentication, an API for managing data, and utilizes an external API to fetch Pokémon information.
 
-## The coding challenge needs to include:
-1. A front end with at least 3 pages +
-2. User authentication (username and password) +
-3. An API +
-4. The use of and external API +
-5. A database +
-6. In the app people will be able to browse Pokémon, see various type of informations about these Pokémon and save their favourite ones. +
-7. Browsing the Pokémons should be available for anyone who visits the site, but a user should authenticate themselves (register, login) with a username and password to be able to save their favourites and see other peoples profiles with their favourite Pokémons. +
+## Features
+- **User Authentication:**
+  - Registration and login pages for users with unique usernames and encrypted passwords.
+  - Passwords are securely stored using modern encryption methods (not MD5).
 
-## User features
-1. Register and login page(s) (username [unique] and password) +
-2. Passwords need to be stored encrypted (NO MD5) +
-3. If you’re feeling up to the challenge you can add email with email confirmation
-4. A homepage with a list of pokemons +
-5. Check pagination or infinite scroll +
-6. You need to be able to sort the pokemons by name +
-7. If you are up to the challenge find other ways to sort them (number of likes for example) or group them by type and so on +
-8. A “search pokemon” feature +
-9. A “search user” feature (only authenticated users) +
-10. A page page where you can see more info about any pokemon +
-11. A user page where you can see the favourite pokemon of the user (only authenticated users) +
-12. A personal user page where the authenticated user can see their favouite pokemons and settings to change username and password +
-13. A way for the authenticated user to like and unlike a pokemon. Maybe even dislike and un-dislike +
-14. A Header a Main and a Footer +
+- **Pokémon Browsing:**
+  - A homepage displaying a list of Pokémon with pagination or infinite scroll.
+  - Sort Pokémon by name or by the number of likes, and group them by type.
+  - Search functionality to find Pokémon by name.
 
-## Logic
-1. The page website should be safe from Javascript and SQL injections. +
-2. All external APIs calls should be made server side +
-3. All database queries should be made from the website’s API not form the frontend +
+- **User Features:**
+  - Authenticated users can search for other users and view their favorite Pokémon.
+  - A personal user page displaying the authenticated user’s favorite Pokémon and settings to change their username and password.
+  - Users can like and unlike Pokémon, and optionally dislike and un-dislike them.
+
+- **Information Pages:**
+  - Detailed information page for each Pokémon, accessible to all users.
+  - User profile pages that show the favorite Pokémon of the user (only for authenticated users).
+
+- **Header, Main, and Footer:**
+  - A consistent layout with a header, main content area, and footer across all pages.
+
+## Technologies Used
+- **Frontend:** React (with React Bootstrap for styling)
+- **Backend:** Node.js and Express
+- **Database:** PostgreSQL
+- **External API:** Pokémon API (for fetching Pokémon data)
+- **Authentication:** JSON Web Tokens (JWT) for secure authentication
+- **Security:** Measures to prevent SQL injection and cross-site scripting (XSS)
