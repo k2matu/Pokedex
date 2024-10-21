@@ -3,9 +3,9 @@ services:
     image: postgres:latest
     container_name: postgres-db
     environment:
-      POSTGRES_DB: db-pokedex
+      POSTGRES_DB: pokedex_db
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 2urzDZ2w1dQM4wO
+      POSTGRES_PASSWORD: mysecretpassword
     ports:
       - "5432:5432"
     volumes:
@@ -18,12 +18,12 @@ services:
       dockerfile: Dockerfile
     container_name: pokedex-app
     environment:
-      NODE_ENV: production
+      NODE_ENV: development
       PG_HOST: postgres
       PG_PORT: 5432
       PG_USER: postgres
-      PG_PASSWORD: 2urzDZ2w1dQM4wO
-      PG_DATABASE: db-pokedex
+      PG_PASSWORD: mysecretpassword
+      PG_DATABASE: pokedex_db
       PORT: 3001
     ports:
       - "3001:3001"
@@ -31,6 +31,18 @@ services:
       - postgres
     volumes:
       - ./server:/usr/src/app
+
+  react:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: serve-client
+    ports:
+      - "5173:5173"
+    environment:
+      VITE_BACKEND_URL: http://node_express:3001
+    volumes:
+      - ./client:/usr/src/client
 
 volumes:
   postgres_data:

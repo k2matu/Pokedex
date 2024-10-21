@@ -6,14 +6,7 @@ import { useLogout } from '../utils/authUtils';
 
 const Header = ({ text }) => {
 	const navigate = useNavigate();
-	const navigate = useNavigate();
 	const user = useSelector((state) => state.auth.user);
-
-	const handleLogout = useLogout();
-
-	const onLogoutClick = () => {
-		handleLogout();
-	};
 
 	const handleLogout = useLogout();
 
@@ -61,7 +54,6 @@ const Header = ({ text }) => {
 				</Nav>
 			</Container>
 		</Navbar>
-		</Navbar >
 	);
 };
 
