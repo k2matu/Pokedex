@@ -25,7 +25,7 @@ const ShowPokemon = () => {
 		if (user && likedPokemons.length === 0) {
 			dispatch(initializeLikes(user));
 		}
-	}, [dispatch, user, likedPokemons]);
+	}, [dispatch, user]);
 
 	const getFilteredAndSortedPokemons = () => {
 		return pokemons

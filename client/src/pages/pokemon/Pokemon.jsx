@@ -11,6 +11,7 @@ const Pokemon = ({ pokemon }) => {
 				variant="top"
 				src={`/pokemon/pokemon/${pokemon.index}.png`}
 				className="img-fluid"
+				loading="lazy"
 			/>
 			<div style={{ height: '1px', backgroundColor: '#ccc', margin: '0' }}></div>
 			<Card.Body>

@@ -41,6 +41,7 @@ const DetailsOfPokemon = ({ pokemon }) => {
 							alt={pokemon.name}
 							height="500px"
 							className="img-fluid rounded-top"
+							loading="lazy"
 						/>
 					</Card>
 				</Col>

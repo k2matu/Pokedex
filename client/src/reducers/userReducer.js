@@ -38,7 +38,6 @@ export const initializeUsers = () => {
 			console.log(users);
 			dispatch(setUsers(users));
 		} catch (err) {
-			dispatch(notif('Failed to load users.', 60, 'danger'));
 			console.error('Error fetching users:', err);
 	}
 	};

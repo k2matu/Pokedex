@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
-import SearchInput from '../pages/Home/SearchInput';
+import SearchInput from '../pages/home/SearchInput';
 import { useNavigate } from 'react-router-dom';
 import { useLogout } from '../utils/authUtils';
 
