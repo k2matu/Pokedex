@@ -8,7 +8,6 @@ The Pokédex App is a web application that allows users to browse Pokémon, view
 - **User Authentication:**
   - Registration and login pages for users with unique usernames and encrypted passwords.
   - Passwords are securely stored using modern encryption methods (not MD5).
-  - Optional email confirmation for user registration.
 
 - **Pokémon Browsing:**
   - A homepage displaying a list of Pokémon with pagination or infinite scroll.
