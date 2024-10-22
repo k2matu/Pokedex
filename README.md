@@ -49,19 +49,19 @@ git clone git@github.com:k2matu/Pokedex.git
 ```
 cd Pokedex
 ```
-3. Create a `.env` file in the root directory based on the example below:
+3. Create a `.env` file in the root directory and paste the information below:
 ```
 # PostgreSQL Configuration
-PG_HOST=postgres          # Hostname for the PostgreSQL database
-PG_PORT=5432             # Port for the PostgreSQL database
-PG_USER=postgres         # Username for the PostgreSQL database
-PG_PASSWORD=mysecretpassword  # Password for the PostgreSQL database
-PG_DATABASE=pokedex_db   # Name of the PostgreSQL database
+PG_HOST=postgres
+PG_PORT=5432
+PG_USER=postgres
+PG_PASSWORD=mysecretpassword
+PG_DATABASE=pokedex_db
 
 # Application Configuration
-PORT=3001                # Port for the Node.js server
-SECRET=mysecrettoken     # Secret token for session management or authentication
-BCRYPT_SALTROUNDS=10     # Number of salt rounds for password hashing
+PORT=3001
+SECRET=mysecrettoken
+BCRYPT_SALTROUNDS=10
 ```
 4. Build and Start the Application:
 ```
