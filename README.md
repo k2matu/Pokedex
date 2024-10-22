@@ -56,7 +56,7 @@ cd ..
 docker-compose up --build
 ```
 4. Install Frontend Dependencies
-Open another terminal window, navigate to the client directory, and install the required dependencies:
+- Open another terminal window, navigate to the client directory, and install the required dependencies:
 ```
 cd client && npm install
 ```
