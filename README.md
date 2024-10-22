@@ -43,7 +43,7 @@ Before running the project, create a `.env` file in the root directory based on 
 ## Compilation
 1. Clone the repository:
 ```
-git@github.com:k2matu/Pokedex.git
+git clone git@github.com:k2matu/Pokedex.git
 ````
 2. Navigate into the directory:
 ```
