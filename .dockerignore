@@ -9,9 +9,12 @@ public
 
 Dockerfile
 docker-compose.yml
+.dockerignore
 
 *.tmp
 *.temp
 
 *.log
 *.env
+
+*.git
