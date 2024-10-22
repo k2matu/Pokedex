@@ -3,9 +3,11 @@ import { setSearchPokemon } from '../../reducers/pokemonReducer';
 import { clearSearch, setSearchUser } from '../../reducers/userReducer';
 import { Form, InputGroup, DropdownButton, Dropdown } from 'react-bootstrap';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const SearchInput = () => {
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 	const [searchType, setSearchType] = useState('pokemon');
 
 	const user = useSelector((state) => state.auth.user);
@@ -19,6 +21,11 @@ const SearchInput = () => {
 		} else {
 			dispatch(setSearchUser(e.target.value));
 		}
+	};
+
+	const onSetSearchType = (type) => {
+		navigate('/');
+		setSearchType(type);
 	};
 
 	return (
@@ -37,8 +44,8 @@ const SearchInput = () => {
 				id="input-group-dropdown-2"
 				align="end"
 			>
-				<Dropdown.Item onClick={() => setSearchType('pokemon')}>pokemon</Dropdown.Item>
-				<Dropdown.Item onClick={() => setSearchType('user')}>user</Dropdown.Item>
+				<Dropdown.Item onClick={() => onSetSearchType('pokemon')}>pokemon</Dropdown.Item>
+				<Dropdown.Item onClick={() => onSetSearchType('user')}>user</Dropdown.Item>
 			</DropdownButton>}
 		</InputGroup>
 	);

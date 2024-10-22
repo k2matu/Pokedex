@@ -40,15 +40,6 @@ const Header = ({ text }) => {
 								<NavDropdown.Item onClick={() => navigate('/settings')}>Settings</NavDropdown.Item>
 								<NavDropdown.Item onClick={onLogoutClick}>Logout</NavDropdown.Item>
 							</NavDropdown>
-							<NavDropdown
-								variant="outline-secondary"
-								title=""
-								id="input-group-dropdown-2"
-								align="end"
-							>
-								<NavDropdown.Item onClick={() => navigate('/settings')}>Settings</NavDropdown.Item>
-								<NavDropdown.Item onClick={onLogoutClick}>Logout</NavDropdown.Item>
-							</NavDropdown>
 						</>
 					)}
 				</Nav>

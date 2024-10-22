@@ -1,5 +1,4 @@
 # Pokédex App
-https://pokedex-k2matu.fly.dev/
 
 ## Overview
 The Pokédex App is a web application that allows users to browse Pokémon, view various information about them, and save their favorite Pokémon. This application includes user authentication, an API for managing data, and utilizes an external API to fetch Pokémon information.
@@ -33,3 +32,37 @@ The Pokédex App is a web application that allows users to browse Pokémon, view
 - **External API:** Pokémon API (for fetching Pokémon data)
 - **Authentication:** JSON Web Tokens (JWT) for secure authentication
 - **Security:** Measures to prevent SQL injection and cross-site scripting (XSS)
+
+## Environment Variables
+
+Before running the project, create a `.env` file in the root directory based on the example below. This file should contain the necessary environment variables for the application to function correctly.
+
+### `.env.example`
+
+```plaintext
+# PostgreSQL Configuration
+PG_HOST=postgres          # Hostname for the PostgreSQL database
+PG_PORT=5432             # Port for the PostgreSQL database
+PG_USER=postgres         # Username for the PostgreSQL database
+PG_PASSWORD=mysecretpassword  # Password for the PostgreSQL database
+PG_DATABASE=pokedex_db   # Name of the PostgreSQL database
+
+# Application Configuration
+PORT=3001                # Port for the Node.js server
+SECRET=mysecrettoken     # Secret token for session management or authentication
+BCRYPT_SALTROUNDS=10     # Number of salt rounds for password hashing
+
+
+## Compilation
+1. Clone the repository:
+```
+git@github.com:k2matu/Pokedex.git
+````
+2. Navigate into the directory:
+```
+cd Pokedex
+```
+4. Build and Start the Application:
+```
+docker-compose up --build
+```
