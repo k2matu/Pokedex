@@ -26,7 +26,7 @@ The Pokédex App is a web application that allows users to browse Pokémon, view
   - A consistent layout with a header, main content area, and footer across all pages.
 
 ## Technologies Used
-- **Frontend:** React (with React Bootstrap for styling)
+- **Frontend:** React (with React Bootstrap for styling). Redux is utilized for state management, enabling efficient handling of application state across components.
 - **Backend:** Node.js and Express
 - **Database:** PostgreSQL
 - **External API:** Pokémon API (for fetching Pokémon data)
