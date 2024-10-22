@@ -7,16 +7,17 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Node Modules
 node_modules/
 client/node_modules/
-client/sprites/
 server/node_modules/
+
+# Build Directories
 dist
 dist-ssr
-*.local
-eslint.config.js
-.prettierrc.js
 
+# Local Configurations
+*.local
 *.env
 
 # Editor directories and files
@@ -29,3 +30,6 @@ eslint.config.js
 *.njsproj
 *.sln
 *.sw?
+
+# GitHub Workflows
+.github/workflows
