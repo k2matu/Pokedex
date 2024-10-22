@@ -1,6 +1,0 @@
-module.exports = {
-	semi: true,
-	tabWidth: 2,
-	useTabs: true,
-	singleQuote: true,
-};
