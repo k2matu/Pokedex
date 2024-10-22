@@ -50,8 +50,7 @@ git@github.com:k2matu/Pokedex.git
 cd Pokedex
 ```
 3. Create a `.env` file in the root directory based on the example below:
-
-```plaintext
+```
 # PostgreSQL Configuration
 PG_HOST=postgres          # Hostname for the PostgreSQL database
 PG_PORT=5432             # Port for the PostgreSQL database
@@ -63,7 +62,7 @@ PG_DATABASE=pokedex_db   # Name of the PostgreSQL database
 PORT=3001                # Port for the Node.js server
 SECRET=mysecrettoken     # Secret token for session management or authentication
 BCRYPT_SALTROUNDS=10     # Number of salt rounds for password hashing
-
+```
 4. Build and Start the Application:
 ```
 docker-compose up --build
