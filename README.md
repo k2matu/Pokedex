@@ -37,9 +37,20 @@ The Pokédex App is a web application that allows users to browse Pokémon, view
 
 Before running the project, create a `.env` file in the root directory based on the example below. This file should contain the necessary environment variables for the application to function correctly.
 
-### `.env.example`
 
-```plaintext
+
+
+## Compilation
+1. Clone the repository:
+```
+git clone git@github.com:k2matu/Pokedex.git
+````
+2. Navigate into the directory:
+```
+cd Pokedex
+```
+3. Create a `.env` file in the root directory based on the example below:
+```
 # PostgreSQL Configuration
 PG_HOST=postgres          # Hostname for the PostgreSQL database
 PG_PORT=5432             # Port for the PostgreSQL database
@@ -51,16 +62,6 @@ PG_DATABASE=pokedex_db   # Name of the PostgreSQL database
 PORT=3001                # Port for the Node.js server
 SECRET=mysecrettoken     # Secret token for session management or authentication
 BCRYPT_SALTROUNDS=10     # Number of salt rounds for password hashing
-
-
-## Compilation
-1. Clone the repository:
-```
-git@github.com:k2matu/Pokedex.git
-````
-2. Navigate into the directory:
-```
-cd Pokedex
 ```
 4. Build and Start the Application:
 ```
