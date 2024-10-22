@@ -45,25 +45,27 @@ Before running the project, create a `.env` file in the root directory based on 
 ```
 git clone git@github.com:k2matu/Pokedex.git
 ````
-2. Navigate into the directory:
+2. Install Backend Dependencies
 ```
-cd Pokedex
+cd Pokedex/server
+npm install
 ```
-3. Create a `.env` file in the root directory and paste the information below:
+3. Build and Start the Backend:
 ```
-# PostgreSQL Configuration
-PG_HOST=postgres
-PG_PORT=5432
-PG_USER=postgres
-PG_PASSWORD=mysecretpassword
-PG_DATABASE=pokedex_db
-
-# Application Configuration
-PORT=3001
-SECRET=mysecrettoken
-BCRYPT_SALTROUNDS=10
-```
-4. Build and Start the Application:
-```
+cd ..
 docker-compose up --build
 ```
+4. Install Frontend Dependencies
+Open another terminal window, navigate to the client directory, and install the required dependencies:
+```
+cd client && npm install
+```
+5. Run the frontend
+```
+npm run dev
+```
+6.  Access the Application
+```
+http://localhost:5173/
+```
+
