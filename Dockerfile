@@ -1,17 +1,3 @@
-# -------- Stage 1: Serve Frontend --------
-FROM node:20 AS serve-client
-
-WORKDIR /usr/src/client
-
-COPY client/package*.json ./
-RUN npm install
-
-EXPOSE 5173
-
-CMD ["npm", "run", "dev", "--", "--host"]
-
-# -------- Stage 2: Build Backend --------
-
 FROM node:20 AS build-server
 
 RUN apt-get update && apt-get install -y postgresql-client

@@ -32,18 +32,6 @@ services:
     volumes:
       - ./server:/usr/src/app
 
-  react:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      target: serve-client
-    ports:
-      - "5173:5173"
-    environment:
-      VITE_BACKEND_URL: http://node_express:3001
-    volumes:
-      - ./client:/usr/src/client
-
 volumes:
   postgres_data:
     driver: local
