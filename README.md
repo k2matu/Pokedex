@@ -33,13 +33,6 @@ The Pokédex App is a web application that allows users to browse Pokémon, view
 - **Authentication:** JSON Web Tokens (JWT) for secure authentication
 - **Security:** Measures to prevent SQL injection and cross-site scripting (XSS)
 
-## Environment Variables
-
-Before running the project, create a `.env` file in the root directory based on the example below. This file should contain the necessary environment variables for the application to function correctly.
-
-
-
-
 ## Compilation
 1. Clone the repository:
 ```
