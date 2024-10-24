@@ -9,14 +9,14 @@ The Pokédex App is a web application that allows users to browse Pokémon, view
   - Passwords are securely stored using modern encryption methods (not MD5).
 
 - **Pokémon Browsing:**
-  - A homepage displaying a list of Pokémon with pagination or infinite scroll.
-  - Sort Pokémon by name or by the number of likes, and group them by type.
+  - A homepage displaying a list of Pokémon with pagination.
+  - Sort Pokémon by name or by number.
   - Search functionality to find Pokémon by name.
 
 - **User Features:**
   - Authenticated users can search for other users and view their favorite Pokémon.
   - A personal user page displaying the authenticated user’s favorite Pokémon and settings to change their username and password.
-  - Users can like and unlike Pokémon, and optionally dislike and un-dislike them.
+  - Users can like and unlike Pokémon.
 
 - **Information Pages:**
   - Detailed information page for each Pokémon, accessible to all users.
