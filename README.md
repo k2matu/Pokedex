@@ -37,28 +37,11 @@ The Pokédex App is a web application that allows users to browse Pokémon, view
 1. Clone the repository:
 ```
 git clone git@github.com:k2matu/Pokedex.git
-````
-2. Install Backend Dependencies
 ```
-cd Pokedex/server
-npm install
+2. Build and Start Pokedex:
 ```
-3. Build and Start the Backend:
-```
-cd ..
+cd Pokedex
 docker-compose up --build
 ```
-4. Install Frontend Dependencies
-- Open another terminal window, navigate to the client directory, and install the required dependencies:
-```
-cd client && npm install
-```
-5. Run the frontend
-```
-npm run dev
-```
-6.  Access the Application
-```
 http://localhost:5173/
-```
 
