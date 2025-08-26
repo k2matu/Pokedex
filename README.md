@@ -33,6 +33,9 @@ The Pokédex App is a web application that allows users to browse Pokémon, view
 - **Authentication:** JSON Web Tokens (JWT) for secure authentication
 - **Security:** Measures to prevent SQL injection and cross-site scripting (XSS)
 
+## Prerequisites
+- `Docker`
+  
 ## Compilation
 1. Clone the repository:
 ```
