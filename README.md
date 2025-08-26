@@ -38,10 +38,21 @@ The Pokédex App is a web application that allows users to browse Pokémon, view
 ```
 git clone git@github.com:k2matu/Pokedex.git
 ```
-2. Build and Start Pokedex:
+2. Navigate into the project folder
 ```
 cd Pokedex
+```
+3. Build and start the application using Docker
+```
 docker-compose up --build
 ```
+4. Access the application
+- Open your browser and go to:
+```
 http://localhost:5173/
+```
+5. Stop the application
+```
+docker-compose down
+```
 
