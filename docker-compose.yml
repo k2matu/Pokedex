@@ -14,9 +14,8 @@ services:
 
   node_express:
     build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: pokedex-app
+      context: server/.
+    container_name: server
     environment:
       NODE_ENV: development
       PG_HOST: postgres
@@ -30,7 +29,17 @@ services:
     depends_on:
       - postgres
     volumes:
-      - ./server:/usr/src/app
+      - ./server:/app
+
+  react:
+    build:
+      context: client/.
+    container_name: client
+    ports:
+      - "5173:5173"
+    depends_on:
+      - postgres
+      - node_express
 
 volumes:
   postgres_data:
