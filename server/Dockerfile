@@ -14,4 +14,4 @@ COPY . .
 
 EXPOSE 3001
 
-CMD ["./wait-for-postgres.sh", "postgres", "npx", "nodemon", "index.js"]
+CMD ["sh", "-c", "./wait-for-postgres.sh postgres && npx nodemon index.js"]
